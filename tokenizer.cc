@@ -3,8 +3,7 @@
 #include "tokenizer.h"
 
 
-
-tokenizer::tokenizer(std::istream &in): in(in), line(1), column(1), eof(false) {
+tokenizer::tokenizer(std::istream &in): in(in), _line(1), _column(0), eof(false), invalid(false) {
     get_char();
 }
 
@@ -18,8 +17,10 @@ bool tokenizer::is_white_char(char c) {
 int tokenizer::get_char() {
     int c = in.get();
     if (c == '\n' || c == '\r') {
-        line += 1;
-        column = 1;
+        _line += 1;
+        _column = 1;
+    } else {
+        _column += 1;
     }
     if (c == EOF) {
         eof = true;
@@ -37,7 +38,15 @@ void tokenizer::skip_white() {
 }
 
 bool tokenizer::stop() {
-    return eof;
+    return eof || invalid;
+}
+
+int tokenizer::line() {
+    return _line;
+}
+
+int tokenizer::column() {
+    return _column;
 }
 
 token tokenizer::next() {
@@ -100,7 +109,7 @@ token tokenizer::next() {
             
         default:
             tk.type = TK_T_INVALID;
-            eof = true;
+            invalid = true;
             break;
     }
     if (tk.type != TK_T_NONE) {

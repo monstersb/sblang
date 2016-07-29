@@ -8,10 +8,11 @@ private:
     std::vector<token> tokens;
     std::vector<char> source;
     std::istream &in;
-    size_t line;
-    size_t column;
+    size_t _line;
+    size_t _column;
     int lookahead;
     bool eof;
+    bool invalid;
     
     bool is_white_char(char c);
     int get_char();
@@ -24,4 +25,7 @@ public:
     
     bool stop();
     token next();
+
+    int line();
+    int column();
 };

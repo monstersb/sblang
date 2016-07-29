@@ -9,14 +9,20 @@ int echo (std::istream &in) {
     while ((c = in.get()) != EOF) {
         std::cout << char(c);
     }
-    std::cout << std::endl;
     return 0;
 }
 
 int tokenize(std::istream &in) {
     tokenizer t(in);
     while (!t.stop()) {
-        std::cout << t.next().info() << std::endl;
+        token tk = t.next();
+        if (tk.type == TK_T_INVALID) {
+            std::cout << "INVALID TOKEN at line: " << t.line() << ", column: " << t.column() << std::endl;
+        } else if (tk.type == TK_T_NONE) {
+            continue;
+        } else {
+            std::cout << tk.info() << std::endl;
+        }
     }
     return 0;
 }
