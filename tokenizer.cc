@@ -60,31 +60,39 @@ token tokenizer::next() {
                 buffer.push_back(lookahead);
                 get_char();
             } while (isalnum(lookahead) || lookahead == '_');
-            tk = token(TK_T_IDENTIFIER, buffer);
+            tk = token(TK_T_ID, buffer);
             break;
         }
         case '=':
-            tk = token(TK_T_ASSIGNMENT, '=');
+            tk = token(TK_T_ASSIGN, '=');
             get_char();
             break;
         case '+':
-            tk = token(TK_T_ADDITION, '+');
+            tk = token(TK_T_ADD, '+');
             get_char();
             break;
         case '-':
-            tk = token(TK_T_MINUS, '-');
+            tk = token(TK_T_SUB, '-');
             get_char();
             break;
         case '*':
-            tk = token(TK_T_MULTIPLICATION, '*');
+            tk = token(TK_T_MUL, '*');
             get_char();
             break;
         case '/':
-            tk = token(TK_T_DIVISION, '/');
+            tk = token(TK_T_DIV, '/');
             get_char();
             break;
         case ';':
             tk = token(TK_T_SEMI, ';');
+            get_char();
+            break;
+        case '(':
+            tk = token(TK_T_LPAR, '(');
+            get_char();
+            break;
+        case ')':
+            tk = token(TK_T_RPAR, ')');
             get_char();
             break;
         case EOF:

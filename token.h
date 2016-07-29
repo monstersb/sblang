@@ -7,14 +7,16 @@ using std::string;
 typedef enum {
     TK_T_NONE,
     TK_T_INVALID,
-    TK_T_IDENTIFIER,
+    TK_T_ID,
     TK_T_NUMBER,
-    TK_T_ASSIGNMENT,
-    TK_T_ADDITION,
-    TK_T_MINUS,
-    TK_T_MULTIPLICATION,
-    TK_T_DIVISION,
+    TK_T_ASSIGN,
+    TK_T_ADD,
+    TK_T_SUB,
+    TK_T_MUL,
+    TK_T_DIV,
     TK_T_SEMI,
+    TK_T_LPAR,
+    TK_T_RPAR,
 } token_type;
 
 class token {
