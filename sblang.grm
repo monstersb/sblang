@@ -1,0 +1,32 @@
+Program:
+    Statements [eof]
+    ;
+
+Statements:
+    Statement*
+    ;
+
+Statement:
+    AssignmentStatement
+    ;
+
+AssignmentStatement:
+    [id] [assign] Expression [semi]
+    ;
+
+Expression:
+    AdditiveExpression
+    ;
+
+AdditiveExpression:
+    MultiplicativeExpression ( ([add] | [sub]) MultiplicativeExpression )*
+    ;
+
+MultiplicativeExpression:
+    PrimaryExpression ( ([mul] | [div]) PrimaryExpression )*
+    ;
+
+PrimaryExpression:
+    [number]
+    | [lpar] Expression [rpar]
+    ;
