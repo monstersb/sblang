@@ -1,4 +1,5 @@
 #include "log.h"
+#include "utils.h"
 
 struct {
     sb_log_level_t level;
@@ -28,7 +29,7 @@ void sb_log::set_level(sb_log_level_t _level) {
 void sb_log::_log(sb_log_level_t l, string tag, string s) {
     if (l >= level) {
         out << log_level_desc[l].color;
-        out << "[ " << log_level_desc[l].name << " ]: " << s;
+        out << format("[ %s ]: %s", log_level_desc[l].name.c_str(), s.c_str());
         out << "\033[0m" << endl;
     }
 }
@@ -36,7 +37,6 @@ void sb_log::_log(sb_log_level_t l, string tag, string s) {
 void sb_log::log(sb_log_level_t l, string s) {
     logger._log(l, "", s);
 }
-
 
 void sb_log::info(string s) {
     logger._log(LOG_LEVEL_INFO, "", s);

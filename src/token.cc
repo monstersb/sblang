@@ -1,6 +1,3 @@
-#include <sstream>
-#include <iomanip>
-
 #include "token.h"
 #include "utils.h"
 
@@ -63,12 +60,6 @@ void sb_token::set(sb_token_type_t t, vector<char> v, size_t _line, size_t _colu
 
 
 string sb_token::info() {
-    std::ostringstream s;
-    s.setf(std::ios::left);
-    s << "{";
-    s << "  " << std::setw(13) << token_type_name[type].name;
-    s << "  (" << std::setw(3) << line << ", " << std::setw(2) << column << ")";
-    s << "  " << std::setw(10) << repr(str);
-    s << "}";
-    return s.str();
+    return format("{ %s  (%zu, %zu)  %s }", token_type_name[type].name.c_str(), line, column,
+                  repr(str).c_str());
 }

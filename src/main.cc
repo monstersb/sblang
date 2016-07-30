@@ -5,6 +5,7 @@
 #include "tokenizer.h"
 #include "parser.h"
 #include "log.h"
+#include "utils.h"
 
 
 int echo(std::istream &in) {
@@ -20,8 +21,7 @@ int tokenize(std::istream &in) {
     while (!t.stop()) {
         sb_token tk = t.next();
         if (tk.type == TK_T_INVALID) {
-            std::cout << "INVALID TOKEN at line: " << t.line() << ", column: " << t.column()
-                      << std::endl;
+            sb_log::error(format("INVALID TOKEN at line: %zu, column: %zu", t.line(), t.column()));
         } else if (tk.type == TK_T_NONE) {
             continue;
         } else {
@@ -46,7 +46,7 @@ int usage(string argv) {
     std::cout << "      -t:  tokenize" << std::endl;
     std::cout << "      -p:  parse" << std::endl;
     std::cout << "      -f:  read from file" << std::endl;
-    std::cout << "      -l:  log level [0 - 4]" << std::endl;
+    std::cout << "      -l:  log level [0 - 3]" << std::endl;
     return 0;
 }
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
             case 'f':
                 fin.open(optarg);
                 if (!fin) {
-                    std::cout << "file not readable" << std::endl;
+                    sb_log::error("invalid log level");
                     return -1;
                 }
                 break;
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
                 if (optarg[0] >= '0' and optarg[0] < '0' + LOG_LEVEL_COUNT && optarg[1] == '\0') {
                     sb_log::set_level(sb_log_level_t(optarg[0] - '0'));
                 } else {
-                    std::cout << "invalid log level" << std::endl;
+                    sb_log::error("file not readable");
                     usage(argv[0]);
                     return -1;
                 }
@@ -117,6 +117,7 @@ int main(int argc, char *argv[]) {
             break;
         case SB_ACTION_NONE:
         default:
+            usage(argv[0]);
             break;
     }
     if (fin) {

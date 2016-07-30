@@ -36,3 +36,13 @@ string repr(string s) {
     r << '"';
     return r.str();
 }
+
+string format(string fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    char *p;
+    vasprintf(&p, fmt.c_str(), args);
+    string r(p);
+    free(p);
+    return r;
+}
