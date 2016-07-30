@@ -54,7 +54,7 @@ void sb_token::set(sb_token_type_t t, vector<char> v) {
 string sb_token::info() {
     std::ostringstream s;
     s.setf(std::ios::left);
-    s << "[ type: " << std::setw(15) << token_type_name[type].name << "str: " << std::setw(20)
-      << repr(str) << "]";
+    s << "{ type: " << std::setw(15) << token_type_name[type].name << "str: " << std::setw(10)
+      << repr(str) << " }";
     return s.str();
 }

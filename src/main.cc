@@ -4,6 +4,8 @@
 
 #include "tokenizer.h"
 #include "parser.h"
+#include "log.h"
+
 
 int echo(std::istream &in) {
     int c;
@@ -23,7 +25,7 @@ int tokenize(std::istream &in) {
         } else if (tk.type == TK_T_NONE) {
             continue;
         } else {
-            std::cout << tk.info() << std::endl;
+            sb_log::info(tk.info());
         }
     }
     return 0;
@@ -32,6 +34,19 @@ int tokenize(std::istream &in) {
 int parse(std::istream &in) {
     sb_parser p(in);
     std::cout << p.parse() << std::endl;
+    return 0;
+}
+
+int usage(string argv) {
+    std::cout << "Usage:" << std::endl;
+    std::cout << "      " << argv << " -e -f [filename]" << std::endl;
+    std::cout << std::endl;
+    std::cout << "      -h:  help" << std::endl;
+    std::cout << "      -e:  echo" << std::endl;
+    std::cout << "      -t:  tokenize" << std::endl;
+    std::cout << "      -p:  parse" << std::endl;
+    std::cout << "      -f:  read from file" << std::endl;
+    std::cout << "      -l:  log level [0 - 4]" << std::endl;
     return 0;
 }
 
@@ -46,7 +61,7 @@ int main(int argc, char *argv[]) {
         SB_ACTION_PARSE,
     } action = SB_ACTION_NONE;
 
-    while ((opt = getopt(argc, argv, "hetpf:")) != -1) {
+    while ((opt = getopt(argc, argv, "hetpf:l:")) != -1) {
         switch (opt) {
             case 'e':
                 if (action != SB_ACTION_NONE) {
@@ -73,17 +88,19 @@ int main(int argc, char *argv[]) {
                     return -1;
                 }
                 break;
+            case 'l':
+                if (optarg[0] >= '0' and optarg[0] < '0' + LOG_LEVEL_COUNT && optarg[1] == '\0') {
+                    sb_log::set_level(sb_log_level_t(optarg[0] - '0'));
+                } else {
+                    std::cout << "invalid log level" << std::endl;
+                    usage(argv[0]);
+                    return -1;
+                }
+                break;
             case 'h':
             case '?':
             default:
-                std::cout << "Usage:" << std::endl;
-                std::cout << "      " << argv[0] << " -e -f [filename]" << std::endl;
-                std::cout << std::endl;
-                std::cout << "      -h:  help" << std::endl;
-                std::cout << "      -e:  echo" << std::endl;
-                std::cout << "      -t:  tokenize" << std::endl;
-                std::cout << "      -p:  parse" << std::endl;
-                std::cout << "      -f:  read from file" << std::endl;
+                usage(argv[0]);
                 return -1;
         }
     }

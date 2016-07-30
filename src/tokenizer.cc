@@ -2,11 +2,12 @@
 #include <assert.h>
 
 #include "tokenizer.h"
-
+#include "log.h"
 
 sb_tokenizer::sb_tokenizer(std::istream &in)
     : in(in), _line(1), _column(0), eof(false), invalid(false) {
     get_char();
+    sb_log::debug("sb_tokenizer inited");
 }
 
 sb_tokenizer::~sb_tokenizer() {}

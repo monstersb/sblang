@@ -1,12 +1,16 @@
-#include "parser.h"
-
 #include <utility>
 
-sb_parser::sb_parser(std::istream &in) : tokenizer(in), ast(NULL), token_pos(0) {}
+#include "parser.h"
+#include "log.h"
+
+sb_parser::sb_parser(std::istream &in) : tokenizer(in), ast(NULL), token_pos(0) {
+    sb_log::debug("sb_parser inited");
+}
 
 sb_parser::~sb_parser() {}
 
 sb_ast *sb_parser::parse() {
+    sb_log::debug("sb_parser started");
     ast = accept_program();
     return ast;
 }
