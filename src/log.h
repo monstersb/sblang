@@ -22,18 +22,17 @@ private:
     sb_log_level_t level;
     void _log(sb_log_level_t l, string tag, string s);
     static sb_log logger;
-    
+
 public:
-    
     sb_log();
     sb_log(ostream &_out);
     sb_log(ostream &_out, sb_log_level_t _level);
     sb_log(sb_log_level_t _level);
-    
+
     static void set_level(sb_log_level_t _level);
-    
+
     static void log(sb_log_level_t l, string s);
-    
+
     static void info(string s);
     static void debug(string s);
     static void warning(string s);

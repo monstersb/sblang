@@ -30,17 +30,19 @@ class sb_token {
 public:
     sb_token_type_t type;
     string str;
+    size_t line;
+    size_t column;
 
     sb_token();
-    sb_token(sb_token_type_t t, char c);
-    sb_token(sb_token_type_t t, string s);
-    sb_token(sb_token_type_t t, vector<char> v);
+    sb_token(sb_token_type_t t, char c, size_t _line, size_t _column);
+    sb_token(sb_token_type_t t, string s, size_t _line, size_t _column);
+    sb_token(sb_token_type_t t, vector<char> v, size_t _line, size_t _column);
     ~sb_token();
 
-    void set(sb_token_type_t t);
-    void set(sb_token_type_t t, char c);
-    void set(sb_token_type_t t, string s);
-    void set(sb_token_type_t t, vector<char> v);
+    void set(sb_token_type_t t, size_t _line, size_t _column);
+    void set(sb_token_type_t t, char c, size_t _line, size_t _column);
+    void set(sb_token_type_t t, string s, size_t _line, size_t _column);
+    void set(sb_token_type_t t, vector<char> v, size_t _line, size_t _column);
 
     string info();
 };

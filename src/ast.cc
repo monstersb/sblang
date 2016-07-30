@@ -36,7 +36,8 @@ sb_ast_additive_expression::sb_ast_additive_expression(sb_ast *_base,
     : sb_ast(AST_T_ADDITIVE_EXPRESSION), base(_base), v(_v) {}
 
 sb_ast_multipicative_expression::sb_ast_multipicative_expression(
-    sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v)
+    sb_ast *_base,
+    vector<pair<sb_ast *, sb_ast *>> &_v)
     : sb_ast(AST_T_ADDITIVE_EXPRESSION), base(_base), v(_v) {}
 
 sb_ast_primary_expression::sb_ast_primary_expression(sb_ast *_exp)
