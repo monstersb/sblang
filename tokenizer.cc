@@ -3,18 +3,18 @@
 #include "tokenizer.h"
 
 
-tokenizer::tokenizer(std::istream &in): in(in), _line(1), _column(0), eof(false), invalid(false) {
+sb_tokenizer::sb_tokenizer(std::istream &in): in(in), _line(1), _column(0), eof(false), invalid(false) {
     get_char();
 }
 
-tokenizer::~tokenizer() {
+sb_tokenizer::~sb_tokenizer() {
 }
 
-bool tokenizer::is_white_char(char c) {
+bool sb_tokenizer::is_white_char(char c) {
     return c == ' ' || c == '\t' || c == '\r' || c == '\n';
 }
 
-int tokenizer::get_char() {
+int sb_tokenizer::get_char() {
     int c = in.get();
     if (c == '\n' || c == '\r') {
         _line += 1;
@@ -31,27 +31,27 @@ int tokenizer::get_char() {
     return c;
 }
 
-void tokenizer::skip_white() {
+void sb_tokenizer::skip_white() {
     while (is_white_char(lookahead)) {
         get_char();
     }
 }
 
-bool tokenizer::stop() {
+bool sb_tokenizer::stop() {
     return eof || invalid;
 }
 
-size_t tokenizer::line() {
+size_t sb_tokenizer::line() {
     return _line;
 }
 
-size_t tokenizer::column() {
+size_t sb_tokenizer::column() {
     return _column;
 }
 
-token tokenizer::next() {
+sb_token sb_tokenizer::next() {
     std::vector<char> buffer;
-    token tk;
+    sb_token tk;
     skip_white();
     switch (lookahead) {
         case '0' ... '9': {
@@ -59,7 +59,7 @@ token tokenizer::next() {
                 buffer.push_back(lookahead);
                 get_char();
             } while (isdigit(lookahead));
-            tk = token(TK_T_NUMBER, buffer);
+            tk = sb_token(TK_T_NUMBER, buffer);
             break;
         }
         case 'a' ... 'z':
@@ -69,39 +69,39 @@ token tokenizer::next() {
                 buffer.push_back(lookahead);
                 get_char();
             } while (isalnum(lookahead) || lookahead == '_');
-            tk = token(TK_T_ID, buffer);
+            tk = sb_token(TK_T_ID, buffer);
             break;
         }
         case '=':
-            tk = token(TK_T_ASSIGN, '=');
+            tk = sb_token(TK_T_ASSIGN, '=');
             get_char();
             break;
         case '+':
-            tk = token(TK_T_ADD, '+');
+            tk = sb_token(TK_T_ADD, '+');
             get_char();
             break;
         case '-':
-            tk = token(TK_T_SUB, '-');
+            tk = sb_token(TK_T_SUB, '-');
             get_char();
             break;
         case '*':
-            tk = token(TK_T_MUL, '*');
+            tk = sb_token(TK_T_MUL, '*');
             get_char();
             break;
         case '/':
-            tk = token(TK_T_DIV, '/');
+            tk = sb_token(TK_T_DIV, '/');
             get_char();
             break;
         case ';':
-            tk = token(TK_T_SEMI, ';');
+            tk = sb_token(TK_T_SEMI, ';');
             get_char();
             break;
         case '(':
-            tk = token(TK_T_LPAR, '(');
+            tk = sb_token(TK_T_LPAR, '(');
             get_char();
             break;
         case ')':
-            tk = token(TK_T_RPAR, ')');
+            tk = sb_token(TK_T_RPAR, ')');
             get_char();
             break;
         case EOF:

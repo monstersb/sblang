@@ -4,14 +4,15 @@
 #include <iostream>
 
 #include "tokenizer.h"
+#include "ast.h"
 
-class parser {
+class sb_parser {
 private:
-    tokenizer _tokenizer;
+    sb_tokenizer tokenizer;
     
 public:
-    parser(std::istream &in);
-    ~parser();
+    sb_parser(std::istream &in);
+    ~sb_parser();
     
     void parse();
 };

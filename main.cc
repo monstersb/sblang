@@ -14,9 +14,9 @@ int echo (std::istream &in) {
 }
 
 int tokenize(std::istream &in) {
-    tokenizer t(in);
+    sb_tokenizer t(in);
     while (!t.stop()) {
-        token tk = t.next();
+        sb_token tk = t.next();
         if (tk.type == TK_T_INVALID) {
             std::cout << "INVALID TOKEN at line: " << t.line() << ", column: " << t.column() << std::endl;
         } else if (tk.type == TK_T_NONE) {
@@ -29,7 +29,7 @@ int tokenize(std::istream &in) {
 }
 
 int parse(std::istream &in) {
-    parser p(in);
+    sb_parser p(in);
     return 0;
 }
 

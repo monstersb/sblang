@@ -20,17 +20,18 @@ typedef enum {
     TK_T_SEMI,
     TK_T_LPAR,
     TK_T_RPAR,
-} token_type;
+} sb_token_type_t;
 
-class token {
+class sb_token {
 public:
-    token_type type;
+    sb_token_type_t type;
     string str;
     
-    token();
-    token(token_type t, char c);
-    token(token_type t, string s);
-    token(token_type t, vector<char> v);
+    sb_token();
+    sb_token(sb_token_type_t t, char c);
+    sb_token(sb_token_type_t t, string s);
+    sb_token(sb_token_type_t t, vector<char> v);
+    ~sb_token();
     
     string info();
 };

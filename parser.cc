@@ -1,9 +1,9 @@
 #include "parser.h"
 
-parser::parser(std::istream &in): _tokenizer(in) {
+sb_parser::sb_parser(std::istream &in): tokenizer(in) {
     
 }
 
-parser::~parser() {
+sb_parser::~sb_parser() {
     
 }

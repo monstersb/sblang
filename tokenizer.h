@@ -8,9 +8,9 @@
 
 #include "token.h"
 
-class tokenizer {
+class sb_tokenizer {
 private:
-    std::vector<token> tokens;
+    std::vector<sb_token> tokens;
     std::string source;
     std::istream &in;
     size_t _line;
@@ -25,11 +25,11 @@ private:
 
     
 public:
-    tokenizer(std::istream &in);
-    ~tokenizer();
+    sb_tokenizer(std::istream &in);
+    ~sb_tokenizer();
     
     bool stop();
-    token next();
+    sb_token next();
 
     size_t line();
     size_t column();
