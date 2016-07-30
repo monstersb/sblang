@@ -12,9 +12,9 @@ private:
     sb_tokenizer tokenizer;
     sb_ast *ast;
     size_t token_pos;
-    
+
     sb_token &lookahead();
-    
+
     sb_ast *accept_program();
     sb_ast *accept_token(sb_token_type_t type);
     sb_ast *accept_statements();
@@ -25,12 +25,12 @@ private:
     sb_ast *accept_multiplicative_expression();
     sb_ast *accept_primary_expression();
     sb_ast *accept_literal();
-    
-    
+
+
 public:
     sb_parser(std::istream &in);
     ~sb_parser();
-    
+
     sb_ast *parse();
 };
 

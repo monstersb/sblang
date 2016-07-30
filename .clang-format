@@ -1,0 +1,45 @@
+---
+BasedOnStyle: Google
+AccessModifierOffset: -4
+# AlignConsecutiveDeclarations: true
+AlignEscapedNewlinesLeft: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: Inline
+BreakBeforeBraces: Attach
+ColumnLimit: 100
+CommentPragmas: '\*' # for Doxygen
+DerivePointerAlignment: false
+ExperimentalAutoDetectBinPacking: true
+# IncludeCategories:
+#   - Regex:    '^"[^/]+"$'
+#     Priority: 1
+#   - Regex:    '^"[^/]+/'
+#     Priority: 2
+#   - Regex:    '^<(assert|complex|ctype|errno|fenv|float|inttypes|iso646|limits|locale|math|setjmp|signal|string|tgmath|threads|time|uchar|wchar|wctype).h>$'
+#     Priority: 3
+#   - Regex:    '^<std(align|arg|atomic|bool|def|int|io|lib|noreturn).h>$'
+#     Priority: 3
+#   - Regex:    '^<c(assert|complex|ctype|errno|fenv|float|inttypes|iso646|limits|locale|math|setjmp|signal|string|tgmath|threads|time|uchar|wchar|wctype)>$'
+#     Priority: 3
+#   - Regex:    '^<cstd(align|arg|atomic|bool|def|int|io|lib|noreturn)>$'
+#     Priority: 3
+#   - Regex:    '^<(algorithm|array|atomic|bitset|cfenv|chrono|codecvt|condition_variable|complex|deque|exceptions|forward_list|fstream|functional|future|initializer_list|iomanip|ios|iosfwd|iostream|istream|iterator|limits|list|locale|map|memory|mutex|new|numeric|ostream|queue|random|ratio|regex|scoped_allocator|set|shared_mutex|sstream|stack|stdexcept|streambuf|string|strstream|system_error|thread|tuple|typeinfo|typeindex|type_traits|unordered_map|unordered_set|utility|valarray|vector)>$'
+#     Priority: 3
+#   - Regex:    '^<experimental/.+?\>$'
+#     Priority: 4
+#   - Regex:    '^<[^/]+>$'
+#     Priority: 5
+#   - Regex:    '^<[^/]+/'
+#     Priority: 6
+# FIXME: waiting for clang-format 3.8.1 with commit 5b12ee708d07fc648e3aea349f9832bca0c6db76
+# IncludeIsMainRegex: '(_test)?$'
+IndentWidth: 4
+MaxEmptyLinesToKeep: 2
+PointerAlignment: Right
+SpacesBeforeTrailingComments: 1
+SpacesInContainerLiterals: true
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+Standard: Cpp11
+TabWidth: 4
+...

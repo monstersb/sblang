@@ -5,7 +5,7 @@
 #include "tokenizer.h"
 #include "parser.h"
 
-int echo (std::istream &in) {
+int echo(std::istream &in) {
     int c;
     while ((c = in.get()) != EOF) {
         std::cout << char(c);
@@ -18,7 +18,8 @@ int tokenize(std::istream &in) {
     while (!t.stop()) {
         sb_token tk = t.next();
         if (tk.type == TK_T_INVALID) {
-            std::cout << "INVALID TOKEN at line: " << t.line() << ", column: " << t.column() << std::endl;
+            std::cout << "INVALID TOKEN at line: " << t.line() << ", column: " << t.column()
+                      << std::endl;
         } else if (tk.type == TK_T_NONE) {
             continue;
         } else {
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
         SB_ACTION_TOKENIZE,
         SB_ACTION_PARSE,
     } action = SB_ACTION_NONE;
-    
+
     while ((opt = getopt(argc, argv, "hetpf:")) != -1) {
         switch (opt) {
             case 'e':

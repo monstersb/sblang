@@ -2,13 +2,9 @@
 
 #include <utility>
 
-sb_parser::sb_parser(std::istream &in): tokenizer(in), ast(NULL), token_pos(0) {
-    
-}
+sb_parser::sb_parser(std::istream &in) : tokenizer(in), ast(NULL), token_pos(0) {}
 
-sb_parser::~sb_parser() {
-    
-}
+sb_parser::~sb_parser() {}
 
 sb_ast *sb_parser::parse() {
     ast = accept_program();
@@ -41,7 +37,7 @@ sb_ast *sb_parser::accept_program() {
 }
 
 sb_ast *sb_parser::accept_statements() {
-    vector<sb_ast*> statements;
+    vector<sb_ast *> statements;
     while (true) {
         sb_ast *statement = accept_statement();
         sb_ast *semi = accept_token(TK_T_SEMI);
@@ -84,7 +80,7 @@ sb_ast *sb_parser::accept_assignment_statements() {
     return NULL;
 }
 
-sb_ast * sb_parser::accept_expression() {
+sb_ast *sb_parser::accept_expression() {
     sb_ast *additive_expression = accept_additive_expression();
     if (additive_expression) {
         return new sb_ast_expression(additive_expression);
@@ -92,10 +88,10 @@ sb_ast * sb_parser::accept_expression() {
     return NULL;
 }
 
-sb_ast * sb_parser::accept_additive_expression() {
+sb_ast *sb_parser::accept_additive_expression() {
     sb_ast *base = accept_multiplicative_expression();
     if (base) {
-        vector<pair<sb_ast*, sb_ast*> > v;
+        vector<pair<sb_ast *, sb_ast *>> v;
         while (true) {
             sb_ast *op = accept_token(TK_T_ADD);
             if (!op) {
@@ -108,17 +104,17 @@ sb_ast * sb_parser::accept_additive_expression() {
             if (!exp) {
                 break;
             }
-            v.push_back(pair<sb_ast*, sb_ast*>(op, exp));
+            v.push_back(pair<sb_ast *, sb_ast *>(op, exp));
         }
         return new sb_ast_additive_expression(base, v);
     }
     return NULL;
 }
 
-sb_ast * sb_parser::accept_multiplicative_expression() {
+sb_ast *sb_parser::accept_multiplicative_expression() {
     sb_ast *base = accept_primary_expression();
     if (base) {
-        vector<pair<sb_ast*, sb_ast*> > v;
+        vector<pair<sb_ast *, sb_ast *>> v;
         while (true) {
             sb_ast *op = accept_token(TK_T_MUL);
             if (!op) {
@@ -131,14 +127,14 @@ sb_ast * sb_parser::accept_multiplicative_expression() {
             if (!exp) {
                 break;
             }
-            v.push_back(pair<sb_ast*, sb_ast*>(op, exp));
+            v.push_back(pair<sb_ast *, sb_ast *>(op, exp));
         }
         return new sb_ast_multipicative_expression(base, v);
     }
     return NULL;
 }
 
-sb_ast * sb_parser::accept_primary_expression() {
+sb_ast *sb_parser::accept_primary_expression() {
     sb_ast *exp = accept_token(TK_T_NUMBER);
     if (exp) {
         return new sb_ast_primary_expression(exp);
@@ -166,4 +162,3 @@ sb_ast *sb_parser::accept_literal() {
     }
     return NULL;
 }
-

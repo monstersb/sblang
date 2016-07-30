@@ -18,15 +18,15 @@ private:
     int lookahead;
     bool eof;
     bool invalid;
-    
+
     bool is_white_char(char c);
     int get_char();
     void skip_white();
-    
+
 public:
     sb_tokenizer(std::istream &in);
     ~sb_tokenizer();
-    
+
     bool stop();
     sb_token &next();
     sb_token &operator[](size_t i);

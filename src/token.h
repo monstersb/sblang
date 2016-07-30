@@ -21,7 +21,7 @@ typedef enum {
     TK_T_SEMI,
     TK_T_LPAR,
     TK_T_RPAR,
-    
+
     TK_T_COUNT,
 } sb_token_type_t;
 
@@ -30,18 +30,18 @@ class sb_token {
 public:
     sb_token_type_t type;
     string str;
-    
+
     sb_token();
     sb_token(sb_token_type_t t, char c);
     sb_token(sb_token_type_t t, string s);
     sb_token(sb_token_type_t t, vector<char> v);
     ~sb_token();
-    
+
     void set(sb_token_type_t t);
     void set(sb_token_type_t t, char c);
     void set(sb_token_type_t t, string s);
     void set(sb_token_type_t t, vector<char> v);
-    
+
     string info();
 };
 

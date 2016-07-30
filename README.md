@@ -1,6 +1,10 @@
 # sblang
 
 ```
+# ./configure
+# make
+# ./build/main -h
+
 Usage:
       ./main -e -f [filename]
 

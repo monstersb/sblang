@@ -4,12 +4,12 @@
 #include "tokenizer.h"
 
 
-sb_tokenizer::sb_tokenizer(std::istream &in): in(in), _line(1), _column(0), eof(false), invalid(false) {
+sb_tokenizer::sb_tokenizer(std::istream &in)
+    : in(in), _line(1), _column(0), eof(false), invalid(false) {
     get_char();
 }
 
-sb_tokenizer::~sb_tokenizer() {
-}
+sb_tokenizer::~sb_tokenizer() {}
 
 bool sb_tokenizer::is_white_char(char c) {
     return c == ' ' || c == '\t' || c == '\r' || c == '\n';
@@ -65,7 +65,7 @@ sb_token &sb_tokenizer::next() {
         }
         case 'a' ... 'z':
         case 'A' ... 'Z':
-        case '_':{
+        case '_': {
             do {
                 buffer.push_back(lookahead);
                 get_char();

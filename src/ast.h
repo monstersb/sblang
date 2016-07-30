@@ -22,90 +22,96 @@ typedef enum {
     AST_T_COUNT,
 } sb_ast_type_t;
 
-
 class sb_ast {
 private:
     sb_ast_type_t type;
-    
+
 public:
     sb_ast(sb_ast_type_t _type);
     ~sb_ast();
-    
+
     string info();
-    
 };
 
-class sb_ast_token: public sb_ast {
+class sb_ast_token : public sb_ast {
 private:
     sb_token token;
+
 public:
     sb_ast_token(sb_token &_token);
 };
 
-
-class sb_ast_program: public sb_ast {
+class sb_ast_program : public sb_ast {
 private:
     sb_ast *statements;
+
 public:
-    sb_ast_program(sb_ast* _statements);
+    sb_ast_program(sb_ast *_statements);
 };
 
-
-class sb_ast_statements: public sb_ast {
+class sb_ast_statements : public sb_ast {
 private:
-    vector<sb_ast*> statements;
+    vector<sb_ast *> statements;
+
 public:
-    sb_ast_statements(vector<sb_ast*> &_statements);
+    sb_ast_statements(vector<sb_ast *> &_statements);
 };
 
-class sb_ast_statement: public sb_ast {
+class sb_ast_statement : public sb_ast {
 private:
     sb_ast *statement;
+
 public:
     sb_ast_statement(sb_ast *_statement);
 };
 
-class sb_ast_assignment_statement: public sb_ast {
+class sb_ast_assignment_statement : public sb_ast {
 private:
     sb_ast *left;
     sb_ast *right;
+
 public:
     sb_ast_assignment_statement(sb_ast *_left, sb_ast *_right);
 };
 
-class sb_ast_expression: public sb_ast {
+class sb_ast_expression : public sb_ast {
 private:
     sb_ast *expression;
+
 public:
     sb_ast_expression(sb_ast *_expression);
 };
 
-class sb_ast_additive_expression: public sb_ast {
+class sb_ast_additive_expression : public sb_ast {
 private:
     sb_ast *base;
-    vector<pair<sb_ast*, sb_ast*> > v;
+    vector<pair<sb_ast *, sb_ast *>> v;
+
 public:
-    sb_ast_additive_expression(sb_ast *_base, vector<pair<sb_ast*, sb_ast*> > &_v);
+    sb_ast_additive_expression(sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v);
 };
 
-class sb_ast_multipicative_expression: public sb_ast {
+class sb_ast_multipicative_expression : public sb_ast {
 private:
     sb_ast *base;
-    vector<pair<sb_ast*, sb_ast*> > v;
+    vector<pair<sb_ast *, sb_ast *>> v;
+
 public:
-    sb_ast_multipicative_expression(sb_ast *_base, vector<pair<sb_ast*, sb_ast*> > &_v);
+    sb_ast_multipicative_expression(sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v);
 };
 
-class sb_ast_primary_expression: public sb_ast {
+class sb_ast_primary_expression : public sb_ast {
 private:
     sb_ast *exp;
+
 public:
     sb_ast_primary_expression(sb_ast *_exp);
 };
 
-class sb_ast_literal: public sb_ast {
+class sb_ast_literal : public sb_ast {
 private:
     sb_ast *value;
+
 public:
     sb_ast_literal(sb_ast *_value);
 };

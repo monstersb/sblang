@@ -1,0 +1,38 @@
+#! /bin/zsh
+
+BUILD_DIR="build"
+COMPILER="g++"
+COMPILE_FLAG="-Wall -g -std=c++11"
+
+echo -e "all: $BUILD_DIR/main $BUILD_DIR/sblang.so" > Makefile
+echo >> Makefile
+objs=""
+for filename in $(ls ./src/*.cc)  
+do  
+    a=$($COMPILER -MM $filename)
+    echo  "$BUILD_DIR/$($COMPILER -MM $filename)" >> Makefile
+    objfilename=$BUILD_DIR/$(basename $filename .cc).o
+    objs="$objfilename $objs"
+    echo -e "\t$COMPILER $COMPILE_FLAG -c $filename -o $objfilename" >> Makefile
+    echo >> Makefile
+done 
+
+echo -e "$BUILD_DIR/libsblang.a: $objs" >> Makefile
+echo -e "\tar -r $BUILD_DIR/libsblang.a $objs" >> Makefile
+echo >> Makefile
+echo -e "$BUILD_DIR/sblang.so: $BUILD_DIR/libsblang.a" >> Makefile
+echo -e "\t$COMPILER $COMPILE_FLAG -L $BUILD_DIR -lsblang -shared -o $BUILD_DIR/sblang.so" >> Makefile
+echo >> Makefile
+echo -e "$BUILD_DIR/main: $BUILD_DIR/libsblang.a" >> Makefile
+echo -e "\t$COMPILER $COMPILE_FLAG -L $BUILD_DIR -lsblang -o $BUILD_DIR/main" >> Makefile
+echo >> Makefile
+
+
+echo -e ".PHONY: clean" >> Makefile
+echo -e "clean:" >> Makefile
+echo -e "\trm -rf $BUILD_DIR" >> Makefile
+echo -e "\trm Makefile" >> Makefile
+
+if [ ! -d $BUILD_DIR ]; then
+      mkdir $BUILD_DIR
+fi
