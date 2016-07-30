@@ -27,6 +27,6 @@ public:
     bool stop();
     token next();
 
-    int line();
-    int column();
+    size_t line();
+    size_t column();
 };

@@ -41,11 +41,11 @@ bool tokenizer::stop() {
     return eof || invalid;
 }
 
-int tokenizer::line() {
+size_t tokenizer::line() {
     return _line;
 }
 
-int tokenizer::column() {
+size_t tokenizer::column() {
     return _column;
 }
 
