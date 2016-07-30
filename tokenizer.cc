@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <assert.h>
 
 #include "tokenizer.h"
 
@@ -49,7 +50,7 @@ size_t sb_tokenizer::column() {
     return _column;
 }
 
-sb_token sb_tokenizer::next() {
+sb_token &sb_tokenizer::next() {
     std::vector<char> buffer;
     sb_token tk;
     skip_white();
@@ -73,47 +74,56 @@ sb_token sb_tokenizer::next() {
             break;
         }
         case '=':
-            tk = sb_token(TK_T_ASSIGN, '=');
+            tk.set(TK_T_ASSIGN, '=');
             get_char();
             break;
         case '+':
-            tk = sb_token(TK_T_ADD, '+');
+            tk.set(TK_T_ADD, '+');
             get_char();
             break;
         case '-':
-            tk = sb_token(TK_T_SUB, '-');
+            tk.set(TK_T_SUB, '-');
             get_char();
             break;
         case '*':
-            tk = sb_token(TK_T_MUL, '*');
+            tk.set(TK_T_MUL, '*');
             get_char();
             break;
         case '/':
-            tk = sb_token(TK_T_DIV, '/');
+            tk.set(TK_T_DIV, '/');
             get_char();
             break;
         case ';':
-            tk = sb_token(TK_T_SEMI, ';');
+            tk.set(TK_T_SEMI, ';');
             get_char();
             break;
         case '(':
-            tk = sb_token(TK_T_LPAR, '(');
+            tk.set(TK_T_LPAR, '(');
             get_char();
             break;
         case ')':
-            tk = sb_token(TK_T_RPAR, ')');
+            tk.set(TK_T_RPAR, ')');
             get_char();
             break;
         case EOF:
+            tk.set(TK_T_EOF);
             break;
-            
         default:
-            tk.type = TK_T_INVALID;
+            tk.set(TK_T_INVALID, buffer);
             invalid = true;
             break;
     }
-    if (tk.type != TK_T_NONE) {
-        tokens.push_back(tk);
-    }
-    return tk;
+    tokens.push_back(tk);
+    return last_token();
+}
+
+
+sb_token &sb_tokenizer::operator[](size_t i) {
+    assert(i < tokens.size());
+    return tokens[i];
+}
+
+
+sb_token &sb_tokenizer::last_token() {
+    return tokens.back();
 }
