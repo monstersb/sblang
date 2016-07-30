@@ -3,7 +3,8 @@ Program:
     ;
 
 Statements:
-    Statement*
+    (Statement [semi])*
+    | [semi]
     ;
 
 Statement:
@@ -11,7 +12,7 @@ Statement:
     ;
 
 AssignmentStatement:
-    [id] [assign] Expression [semi]
+    [id] [assign] Expression
     ;
 
 Expression:
@@ -27,6 +28,10 @@ MultiplicativeExpression:
     ;
 
 PrimaryExpression:
-    [number]
+    Literal
     | [lpar] Expression [rpar]
+    ;
+
+Literal:
+    [number]
     ;

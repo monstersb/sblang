@@ -30,6 +30,7 @@ int tokenize(std::istream &in) {
 
 int parse(std::istream &in) {
     sb_parser p(in);
+    std::cout << p.parse() << std::endl;
     return 0;
 }
 
