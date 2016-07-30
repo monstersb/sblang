@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "tokenizer.h"
+#include "parser.h"
 
 int echo (std::istream &in) {
     int c;
@@ -27,6 +28,11 @@ int tokenize(std::istream &in) {
     return 0;
 }
 
+int parse(std::istream &in) {
+    parser p(in);
+    return 0;
+}
+
 int main(int argc, char *argv[]) {
     std::ifstream fin;
     fin.setstate(std::ios_base::badbit);
@@ -35,21 +41,28 @@ int main(int argc, char *argv[]) {
         SB_ACTION_NONE,
         SB_ACTION_ECHO,
         SB_ACTION_TOKENIZE,
+        SB_ACTION_PARSE,
     } action = SB_ACTION_NONE;
     
-    while ((opt = getopt(argc, argv, "htef:")) != -1) {
+    while ((opt = getopt(argc, argv, "hetpf:")) != -1) {
         switch (opt) {
+            case 'e':
+                if (action != SB_ACTION_NONE) {
+                    return -1;
+                }
+                action = SB_ACTION_ECHO;
+                break;
             case 't':
                 if (action != SB_ACTION_NONE) {
                     return -1;
                 }
                 action = SB_ACTION_TOKENIZE;
                 break;
-            case 'e':
+            case 'p':
                 if (action != SB_ACTION_NONE) {
                     return -1;
                 }
-                action = SB_ACTION_ECHO;
+                action = SB_ACTION_PARSE;
                 break;
             case 'f':
                 fin.open(optarg);
@@ -62,11 +75,12 @@ int main(int argc, char *argv[]) {
             case '?':
             default:
                 std::cout << "Usage:" << std::endl;
-                std::cout << "      " << argv[0] << " -t -f [filename]" << std::endl;
+                std::cout << "      " << argv[0] << " -e -f [filename]" << std::endl;
                 std::cout << std::endl;
                 std::cout << "      -h:  help" << std::endl;
-                std::cout << "      -t:  tokenize" << std::endl;
                 std::cout << "      -e:  echo" << std::endl;
+                std::cout << "      -t:  tokenize" << std::endl;
+                std::cout << "      -p:  parse" << std::endl;
                 std::cout << "      -f:  read from file" << std::endl;
                 return -1;
         }
@@ -78,6 +92,9 @@ int main(int argc, char *argv[]) {
             break;
         case SB_ACTION_TOKENIZE:
             tokenize(in);
+            break;
+        case SB_ACTION_PARSE:
+            parse(in);
             break;
         case SB_ACTION_NONE:
         default:

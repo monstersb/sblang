@@ -1,3 +1,6 @@
+#ifndef SB_TOKEN_H
+#define SB_TOKEN_H
+
 #include <vector>
 #include <string>
 
@@ -31,3 +34,5 @@ public:
     
     string info();
 };
+
+#endif // SB_TOKEN_H

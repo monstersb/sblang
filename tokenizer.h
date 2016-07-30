@@ -1,3 +1,7 @@
+#ifndef SB_TOKENIZER_H
+#define SB_TOKENIZER_H
+
+
 #include <istream>
 #include <vector>
 #include <string>
@@ -30,3 +34,5 @@ public:
     size_t line();
     size_t column();
 };
+
+#endif // SB_TOKENIZER_H
