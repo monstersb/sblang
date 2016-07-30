@@ -1,12 +1,13 @@
 #include <istream>
 #include <vector>
+#include <string>
 
 #include "token.h"
 
 class tokenizer {
 private:
     std::vector<token> tokens;
-    std::vector<char> source;
+    std::string source;
     std::istream &in;
     size_t _line;
     size_t _column;
