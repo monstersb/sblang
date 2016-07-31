@@ -25,6 +25,12 @@ typedef enum {
     TK_T_COUNT,
 } sb_token_type_t;
 
+typedef struct {
+    sb_token_type_t type;
+    string name;
+} sb_token_desc_t;
+
+extern sb_token_desc_t sb_token_desc[TK_T_COUNT];
 
 class sb_token {
 public:

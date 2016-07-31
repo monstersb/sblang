@@ -29,6 +29,7 @@ public:
 
     bool stop();
     sb_token &next();
+    bool tokenize();
     sb_token &operator[](size_t i);
     sb_token &last_token();
 

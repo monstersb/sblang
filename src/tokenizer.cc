@@ -3,6 +3,7 @@
 
 #include "tokenizer.h"
 #include "log.h"
+#include "utils.h"
 
 sb_tokenizer::sb_tokenizer(std::istream &in)
     : in(in), _line(1), _column(0), eof(false), invalid(false) {
@@ -113,11 +114,23 @@ sb_token &sb_tokenizer::next() {
             break;
         default:
             tk.set(TK_T_INVALID, buffer, tk_line, tk_column);
+            sb_log::error(format("INVALID TOKEN at line: %zu, column: %zu", tk_line, tk_column));
             invalid = true;
             break;
     }
     tokens.push_back(tk);
     return last_token();
+}
+
+bool sb_tokenizer::tokenize() {
+    sb_log::debug("tokenizer started");
+    while (!invalid) {
+        sb_token &tk = next();
+        if (tk.type == TK_T_EOF) {
+            return true;
+        }
+    }
+    return false;
 }
 
 

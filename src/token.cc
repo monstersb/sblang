@@ -1,18 +1,20 @@
 #include "token.h"
 #include "utils.h"
 
-#define TOKEN_TYPE_NAME(_T)                                                                        \
-    { _T, #_T }
-
-struct {
-    sb_token_type_t type;
-    string name;
-} token_type_name[TK_T_COUNT] = {
-    TOKEN_TYPE_NAME(TK_T_NONE), TOKEN_TYPE_NAME(TK_T_INVALID), TOKEN_TYPE_NAME(TK_T_EOF),
-    TOKEN_TYPE_NAME(TK_T_ID),   TOKEN_TYPE_NAME(TK_T_NUMBER),  TOKEN_TYPE_NAME(TK_T_ASSIGN),
-    TOKEN_TYPE_NAME(TK_T_ADD),  TOKEN_TYPE_NAME(TK_T_SUB),     TOKEN_TYPE_NAME(TK_T_MUL),
-    TOKEN_TYPE_NAME(TK_T_DIV),  TOKEN_TYPE_NAME(TK_T_SEMI),    TOKEN_TYPE_NAME(TK_T_LPAR),
-    TOKEN_TYPE_NAME(TK_T_RPAR),
+sb_token_desc_t sb_token_desc[TK_T_COUNT] = {
+    { TK_T_NONE, "NONE" },
+    { TK_T_INVALID, "INVALID" },
+    { TK_T_EOF, "EOF" },
+    { TK_T_ID, "ID" },
+    { TK_T_NUMBER, "NUMBER" },
+    { TK_T_ASSIGN, "ASSIGN" },
+    { TK_T_ADD, "ADD" },
+    { TK_T_SUB, "SUB" },
+    { TK_T_MUL, "MUL" },
+    { TK_T_DIV, "DIV" },
+    { TK_T_SEMI, "SEMI" },
+    { TK_T_LPAR, "LPAR" },
+    { TK_T_RPAR, "RPAR" },
 };
 
 
@@ -60,6 +62,6 @@ void sb_token::set(sb_token_type_t t, vector<char> v, size_t _line, size_t _colu
 
 
 string sb_token::info() {
-    return format("{ %s  (%zu, %zu)  %s }", token_type_name[type].name.c_str(), line, column,
+    return format("{ %s  (%zu, %zu)  %s }", sb_token_desc[type].name.c_str(), line, column,
                   repr(str).c_str());
 }

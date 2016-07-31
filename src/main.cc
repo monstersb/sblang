@@ -21,9 +21,9 @@ int tokenize(std::istream &in) {
     while (!t.stop()) {
         sb_token tk = t.next();
         if (tk.type == TK_T_INVALID) {
-            sb_log::error(format("INVALID TOKEN at line: %zu, column: %zu", t.line(), t.column()));
+            return -1;
         } else if (tk.type == TK_T_NONE) {
-            continue;
+            return -1;
         } else {
             sb_log::info(tk.info());
         }
