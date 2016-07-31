@@ -13,7 +13,7 @@ typedef enum {
     LOG_LEVEL_INFO,
     LOG_LEVEL_WARNING,
     LOG_LEVEL_ERROR,
-    
+
     LOG_LEVEL_COUNT,
 } sb_log_level_t;
 

@@ -27,7 +27,7 @@ sb_token &sb_parser::lookahead() {
 sb_ast *sb_parser::accept_token(sb_token_type_t type) {
     if (lookahead().type == type) {
         sb_ast *ast = new sb_ast_token(lookahead(), token_pos);
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         token_pos += 1;
         return ast;
     }
@@ -43,7 +43,7 @@ sb_ast *sb_parser::accept_program() {
             sb_ast *ast = new sb_ast_program(statements);
             ast->begin_tk_pos = statements->begin_tk_pos;
             ast->end_tk_pos = token_pos - 1;
-            sb_log::info(ast->info());
+            sb_log::debug(ast->info());
             return ast;
         }
         delete statements;
@@ -72,7 +72,7 @@ sb_ast *sb_parser::accept_statements() {
     sb_ast *ast = new sb_ast_statements(statements);
     ast->begin_tk_pos = _begin_tk_pos;
     ast->end_tk_pos = token_pos - 1;
-    sb_log::info(ast->info());
+    sb_log::debug(ast->info());
     return ast;
 }
 
@@ -82,7 +82,7 @@ sb_ast *sb_parser::accept_statement() {
         sb_ast *ast = new sb_ast_statement(statement);
         ast->begin_tk_pos = statement->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         return ast;
     }
     return NULL;
@@ -99,7 +99,7 @@ sb_ast *sb_parser::accept_assignment_statements() {
                 sb_ast *ast = new sb_ast_assignment_statement(left, right);
                 ast->begin_tk_pos = left->begin_tk_pos;
                 ast->end_tk_pos = token_pos - 1;
-                sb_log::info(ast->info());
+                sb_log::debug(ast->info());
                 return ast;
             }
         }
@@ -114,7 +114,7 @@ sb_ast *sb_parser::accept_expression() {
         sb_ast *ast = new sb_ast_expression(additive_expression);
         ast->begin_tk_pos = additive_expression->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         return ast;
     }
     return NULL;
@@ -141,7 +141,7 @@ sb_ast *sb_parser::accept_additive_expression() {
         sb_ast *ast = new sb_ast_additive_expression(base, v);
         ast->begin_tk_pos = base->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         return ast;
     }
     return NULL;
@@ -168,7 +168,7 @@ sb_ast *sb_parser::accept_multiplicative_expression() {
         sb_ast *ast = new sb_ast_multipicative_expression(base, v);
         ast->begin_tk_pos = base->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         return ast;
     }
     return NULL;
@@ -180,7 +180,7 @@ sb_ast *sb_parser::accept_primary_expression() {
         sb_ast *ast = new sb_ast_primary_expression(exp);
         ast->begin_tk_pos = exp->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         return ast;
     }
     sb_ast *l = accept_token(TK_T_LPAR);
@@ -193,7 +193,7 @@ sb_ast *sb_parser::accept_primary_expression() {
                 sb_ast *ast = new sb_ast_primary_expression(exp);
                 ast->begin_tk_pos = l->begin_tk_pos;
                 ast->end_tk_pos = r->begin_tk_pos;
-                sb_log::info(ast->info());
+                sb_log::debug(ast->info());
                 return ast;
             }
             delete exp;
@@ -209,7 +209,7 @@ sb_ast *sb_parser::accept_literal() {
         sb_ast *ast = new sb_ast_literal(tk);
         ast->begin_tk_pos = tk->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
-        sb_log::info(ast->info());
+        sb_log::debug(ast->info());
         return ast;
     }
     return NULL;

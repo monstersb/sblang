@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "tokenizer.h"
+#include "ast.h"
 #include "parser.h"
 #include "log.h"
 #include "utils.h"
@@ -33,7 +34,8 @@ int tokenize(std::istream &in) {
 
 int parse(std::istream &in) {
     sb_parser p(in);
-    std::cout << p.parse() << std::endl;
+    sb_ast *ast = p.parse();
+    sb_log::info(ast->info());
     return 0;
 }
 
