@@ -82,8 +82,13 @@ sb_ast *sb_parser::accept_statement() {
     if (statement) {
         goto success;
     }
-
+    
     statement = accept_print_statements();
+    if (statement) {
+        goto success;
+    }
+    
+    statement = accept_block_statements();
     if (statement) {
         goto success;
     }
@@ -130,6 +135,27 @@ sb_ast *sb_parser::accept_print_statements() {
             ast->end_tk_pos = token_pos - 1;
             sb_log::debug(ast->info());
             return ast;
+        }
+    }
+    return NULL;
+}
+
+sb_ast *sb_parser::accept_block_statements() {
+    sb_ast *l = accept_token(TK_T_LBRACE);
+    if (l) {
+        delete l;
+        sb_ast *statements = accept_statements();
+        if (statements) {
+            sb_ast *r = accept_token(TK_T_RBRACE);
+            if (r) {
+                delete r;
+                sb_ast *ast = new sb_ast_block_statement(statements);
+                ast->begin_tk_pos = l->begin_tk_pos;
+                ast->end_tk_pos = r->end_tk_pos;
+                sb_log::debug(ast->info());
+                return ast;
+            }
+            delete statements;
         }
     }
     return NULL;

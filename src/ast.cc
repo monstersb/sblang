@@ -3,6 +3,7 @@
 
 #include "ast.h"
 #include "utils.h"
+#include "log.h"
 
 
 sb_ast_desc_t sb_ast_desc[AST_T_COUNT] = {
@@ -14,6 +15,7 @@ sb_ast_desc_t sb_ast_desc[AST_T_COUNT] = {
     {AST_T_STATEMENT, "STATEMENT"},
     {AST_T_ASSIGNMENT_STATEMENT, "ASSIGNMENT_STATEMENT"},
     {AST_T_PRINT_STATEMENT, "PRINT_STATEMENT"},
+    {AST_T_BLOCK_STATEMENT, "BLOCK_STATEMENT"},
     {AST_T_EXPRESSION, "EXPRESSION"},
     {AST_T_ADDITIVE_EXPRESSION, "ADDITIVE_EXPRESSION"},
     {AST_T_MULTIPICATE_EXPRESSION, "MULTIPICATE_EXPRESSION"},
@@ -103,6 +105,7 @@ string sb_ast_statements::info() {
 string sb_ast_statements::str() {
     std::ostringstream s;
     for (auto i = statements.begin(); i != statements.end(); ++i) {
+        sb_log::error((*i)->str());
         s << (*i)->str() << ";";
     }
     return s.str();
@@ -159,7 +162,7 @@ sb_t_object *sb_ast_assignment_statement::execute() {
 
 
 sb_ast_print_statement::sb_ast_print_statement(sb_ast *_exp)
-    : sb_ast(AST_T_PRINT_STATEMENT), exp(_exp) {}
+: sb_ast(AST_T_PRINT_STATEMENT), exp(_exp) {}
 
 
 string sb_ast_print_statement::info() {
@@ -178,6 +181,27 @@ sb_t_object *sb_ast_print_statement::execute() {
     sb_t_object *value = exp->execute();
     std::cout << value->str() << std::endl;
     return value;
+}
+
+
+sb_ast_block_statement::sb_ast_block_statement(sb_ast *_statements)
+: sb_ast(AST_T_BLOCK_STATEMENT), statements(_statements) {}
+
+
+string sb_ast_block_statement::info() {
+    return format("{ %zu:%zu %s %s }",
+                  begin_tk_pos,
+                  end_tk_pos,
+                  sb_ast_desc[type].name.c_str(),
+                  repr(str()).c_str());
+}
+
+string sb_ast_block_statement::str() {
+    return format("{%s}", statements->str().c_str());
+}
+
+sb_t_object *sb_ast_block_statement::execute() {
+    return statements->execute();
 }
 
 

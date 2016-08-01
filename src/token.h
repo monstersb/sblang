@@ -21,6 +21,8 @@ typedef enum {
     TK_T_SEMI,
     TK_T_LPAR,
     TK_T_RPAR,
+    TK_T_LBRACE,
+    TK_T_RBRACE,
 
     TK_T_K_PRINT,
 

@@ -10,6 +10,7 @@ Statements:
 Statement:
     AssignmentStatement
     | PrintStatement
+    | BlockStatement
     ;
 
 AssignmentStatement:
@@ -18,6 +19,10 @@ AssignmentStatement:
 
 PrintStatement:
     [k_print] Expression
+    ;
+
+BlockStatement:
+    [lbrace] Statements [rbrace]
     ;
 
 Expression:

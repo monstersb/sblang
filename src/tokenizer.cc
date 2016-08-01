@@ -118,6 +118,14 @@ sb_token &sb_tokenizer::next() {
             tk.set(TK_T_RPAR, ')', tk_line, tk_column);
             get_char();
             break;
+        case '{':
+            tk.set(TK_T_LBRACE, '{', tk_line, tk_column);
+            get_char();
+            break;
+        case '}':
+            tk.set(TK_T_RBRACE, '}', tk_line, tk_column);
+            get_char();
+            break;
         case EOF:
             tk.set(TK_T_EOF, tk_line, tk_column);
             break;
