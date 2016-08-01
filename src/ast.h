@@ -17,6 +17,7 @@ typedef enum {
     AST_T_STATEMENTS,
     AST_T_STATEMENT,
     AST_T_ASSIGNMENT_STATEMENT,
+    AST_T_PRINT_STATEMENT,
     AST_T_EXPRESSION,
     AST_T_ADDITIVE_EXPRESSION,
     AST_T_MULTIPICATE_EXPRESSION,
@@ -94,6 +95,16 @@ public:
     sb_ast *right;
 
     sb_ast_assignment_statement(sb_ast *_left, sb_ast *_right);
+
+    virtual string info();
+    virtual string str();
+};
+
+class sb_ast_print_statement : public sb_ast {
+public:
+    sb_ast *exp;
+
+    sb_ast_print_statement(sb_ast *_exp);
 
     virtual string info();
     virtual string str();

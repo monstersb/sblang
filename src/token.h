@@ -22,6 +22,8 @@ typedef enum {
     TK_T_LPAR,
     TK_T_RPAR,
 
+    TK_T_K_PRINT,
+
     TK_T_COUNT,
 } sb_token_type_t;
 

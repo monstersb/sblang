@@ -77,15 +77,25 @@ sb_ast *sb_parser::accept_statements() {
 }
 
 sb_ast *sb_parser::accept_statement() {
-    sb_ast *statement = accept_assignment_statements();
+    sb_ast *statement, *ast;
+    statement = accept_assignment_statements();
     if (statement) {
-        sb_ast *ast = new sb_ast_statement(statement);
-        ast->begin_tk_pos = statement->begin_tk_pos;
-        ast->end_tk_pos = token_pos - 1;
-        sb_log::debug(ast->info());
-        return ast;
+        goto success;
     }
+
+    statement = accept_print_statements();
+    if (statement) {
+        goto success;
+    }
+
     return NULL;
+
+success:
+    ast = new sb_ast_statement(statement);
+    ast->begin_tk_pos = statement->begin_tk_pos;
+    ast->end_tk_pos = token_pos - 1;
+    sb_log::debug(ast->info());
+    return ast;
 }
 
 sb_ast *sb_parser::accept_assignment_statements() {
@@ -104,6 +114,23 @@ sb_ast *sb_parser::accept_assignment_statements() {
             }
         }
         delete left;
+    }
+    return NULL;
+}
+
+
+sb_ast *sb_parser::accept_print_statements() {
+    sb_ast *print = accept_token(TK_T_K_PRINT);
+    if (print) {
+        delete print;
+        sb_ast *exp = accept_expression();
+        if (exp) {
+            sb_ast *ast = new sb_ast_print_statement(exp);
+            ast->begin_tk_pos = print->begin_tk_pos;
+            ast->end_tk_pos = token_pos - 1;
+            sb_log::debug(ast->info());
+            return ast;
+        }
     }
     return NULL;
 }

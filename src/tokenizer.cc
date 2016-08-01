@@ -40,6 +40,14 @@ void sb_tokenizer::skip_white() {
     }
 }
 
+
+sb_token_type_t sb_tokenizer::keyword_type(string s) {
+    if (s == "print") {
+        return TK_T_K_PRINT;
+    }
+    return TK_T_ID;
+}
+
 bool sb_tokenizer::stop() {
     return eof || invalid;
 }
@@ -74,7 +82,8 @@ sb_token &sb_tokenizer::next() {
                 buffer.push_back(lookahead);
                 get_char();
             } while (isalnum(lookahead) || lookahead == '_');
-            tk = sb_token(TK_T_ID, buffer, tk_line, tk_column);
+            tk = sb_token(keyword_type(string(buffer.begin(), buffer.end())), buffer, tk_line,
+                          tk_column);
             break;
         }
         case '=':

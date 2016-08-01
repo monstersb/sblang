@@ -20,6 +20,7 @@ private:
     sb_ast *accept_statements();
     sb_ast *accept_statement();
     sb_ast *accept_assignment_statements();
+    sb_ast *accept_print_statements();
     sb_ast *accept_expression();
     sb_ast *accept_additive_expression();
     sb_ast *accept_multiplicative_expression();

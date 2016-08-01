@@ -9,10 +9,15 @@ Statements:
 
 Statement:
     AssignmentStatement
+    | PrintStatement
     ;
 
 AssignmentStatement:
     [id] [assign] Expression
+    ;
+
+PrintStatement:
+    [k_print] Expression
     ;
 
 Expression:

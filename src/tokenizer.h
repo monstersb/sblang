@@ -22,6 +22,8 @@ private:
     bool is_white_char(char c);
     int get_char();
     void skip_white();
+    sb_token_type_t keyword_type(string s);
+
 
 public:
     sb_tokenizer(std::istream &in);
