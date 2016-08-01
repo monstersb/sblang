@@ -39,6 +39,14 @@ int parse(std::istream &in) {
     return 0;
 }
 
+int run(std::istream &in) {
+    sb_parser p(in);
+    sb_ast *ast = p.parse();
+    sb_log::info(ast->info());
+    sb_log::info(ast->execute()->str());
+    return 0;
+}
+
 int usage(string argv) {
     std::cout << "Usage:" << std::endl;
     std::cout << "      " << argv << " -e -f [filename]" << std::endl;
@@ -47,6 +55,7 @@ int usage(string argv) {
     std::cout << "      -e:  echo" << std::endl;
     std::cout << "      -t:  tokenize" << std::endl;
     std::cout << "      -p:  parse" << std::endl;
+    std::cout << "      -r:  run" << std::endl;
     std::cout << "      -f:  read from file" << std::endl;
     std::cout << "      -l:  log level [0 - 3]" << std::endl;
     return 0;
@@ -61,9 +70,10 @@ int main(int argc, char *argv[]) {
         SB_ACTION_ECHO,
         SB_ACTION_TOKENIZE,
         SB_ACTION_PARSE,
+        SB_ACTION_RUN,
     } action = SB_ACTION_NONE;
 
-    while ((opt = getopt(argc, argv, "hetpf:l:")) != -1) {
+    while ((opt = getopt(argc, argv, "hetprf:l:")) != -1) {
         switch (opt) {
             case 'e':
                 if (action != SB_ACTION_NONE) {
@@ -82,6 +92,12 @@ int main(int argc, char *argv[]) {
                     return -1;
                 }
                 action = SB_ACTION_PARSE;
+                break;
+            case 'r':
+                if (action != SB_ACTION_NONE) {
+                    return -1;
+                }
+                action = SB_ACTION_RUN;
                 break;
             case 'f':
                 fin.open(optarg);
@@ -116,6 +132,9 @@ int main(int argc, char *argv[]) {
             break;
         case SB_ACTION_PARSE:
             parse(in);
+            break;
+        case SB_ACTION_RUN:
+            run(in);
             break;
         case SB_ACTION_NONE:
         default:

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <sstream>
 
 #include "ast.h"
@@ -20,6 +21,7 @@ sb_ast_desc_t sb_ast_desc[AST_T_COUNT] = {
     {AST_T_LITERAL, "LITERAL"},
 };
 
+
 sb_ast::sb_ast(sb_ast_type_t _type) : type(_type) {}
 
 sb_ast::sb_ast(sb_ast_type_t _type, size_t _begin_tk_pos, size_t _end_tk_pos)
@@ -39,6 +41,11 @@ string sb_ast::str() {
     return string();
 }
 
+sb_t_object *sb_ast::execute() {
+    return new sb_t_object();
+}
+
+
 sb_ast_program::sb_ast_program(sb_ast *_statements)
     : sb_ast(AST_T_PROGRAM), statements(_statements) {}
 
@@ -53,6 +60,11 @@ string sb_ast_program::info() {
 string sb_ast_program::str() {
     return statements->str();
 }
+
+sb_t_object *sb_ast_program::execute() {
+    return statements->execute();
+}
+
 
 sb_ast_token::sb_ast_token(sb_token &_token) : sb_ast(AST_T_TOKEN), token(_token) {}
 
@@ -71,6 +83,11 @@ string sb_ast_token::info() {
 string sb_ast_token::str() {
     return token.str;
 }
+
+sb_t_object *sb_ast_token::execute() {
+    return new sb_t_null();
+}
+
 
 sb_ast_statements::sb_ast_statements(std::vector<sb_ast *> &_statements)
     : sb_ast(AST_T_STATEMENTS), statements(_statements) {}
@@ -91,6 +108,14 @@ string sb_ast_statements::str() {
     return s.str();
 }
 
+sb_t_object *sb_ast_statements::execute() {
+    for (auto i = statements.begin(); i != statements.end(); ++i) {
+        (*i)->execute();
+    }
+    return new sb_t_null();
+}
+
+
 sb_ast_statement::sb_ast_statement(sb_ast *_statement)
     : sb_ast(AST_T_STATEMENT), statement(_statement) {}
 
@@ -105,6 +130,11 @@ string sb_ast_statement::info() {
 string sb_ast_statement::str() {
     return statement->str();
 }
+
+sb_t_object *sb_ast_statement::execute() {
+    return statement->execute();
+}
+
 
 sb_ast_assignment_statement::sb_ast_assignment_statement(sb_ast *_left, sb_ast *_right)
     : sb_ast(AST_T_ASSIGNMENT_STATEMENT), left(_left), right(_right) {}
@@ -122,6 +152,12 @@ string sb_ast_assignment_statement::str() {
     return format("%s=%s", left->str().c_str(), right->str().c_str());
 }
 
+sb_t_object *sb_ast_assignment_statement::execute() {
+    sb_t_object *value = right->execute();
+    return value;
+}
+
+
 sb_ast_print_statement::sb_ast_print_statement(sb_ast *_exp)
     : sb_ast(AST_T_PRINT_STATEMENT), exp(_exp) {}
 
@@ -138,6 +174,13 @@ string sb_ast_print_statement::str() {
     return format("print %s", exp->str().c_str());
 }
 
+sb_t_object *sb_ast_print_statement::execute() {
+    sb_t_object *value = exp->execute();
+    std::cout << value->str() << std::endl;
+    return value;
+}
+
+
 sb_ast_expression::sb_ast_expression(sb_ast *_expression)
     : sb_ast(AST_T_EXPRESSION), expression(_expression) {}
 
@@ -153,6 +196,11 @@ string sb_ast_expression::info() {
 string sb_ast_expression::str() {
     return expression->str();
 }
+
+sb_t_object *sb_ast_expression::execute() {
+    return expression->execute();
+}
+
 
 sb_ast_additive_expression::sb_ast_additive_expression(sb_ast *_base,
                                                        vector<pair<sb_ast *, sb_ast *>> &_v)
@@ -176,6 +224,11 @@ string sb_ast_additive_expression::str() {
     return s.str();
 }
 
+sb_t_object *sb_ast_additive_expression::execute() {
+    return new sb_t_int(0);
+}
+
+
 sb_ast_multipicative_expression::sb_ast_multipicative_expression(
     sb_ast *_base,
     vector<pair<sb_ast *, sb_ast *>> &_v)
@@ -197,6 +250,10 @@ string sb_ast_multipicative_expression::str() {
         s << i->first->str() << i->second->str();
     }
     return s.str();
+}
+
+sb_t_object *sb_ast_multipicative_expression::execute() {
+    return new sb_t_int(0);
 }
 
 
@@ -223,6 +280,11 @@ string sb_ast_primary_expression::str() {
     }
 }
 
+sb_t_object *sb_ast_primary_expression::execute() {
+    return exp->execute();
+}
+
+
 sb_ast_literal::sb_ast_literal(sb_ast *_value) : sb_ast(AST_T_LITERAL), value(_value) {}
 
 string sb_ast_literal::info() {
@@ -235,4 +297,12 @@ string sb_ast_literal::info() {
 
 string sb_ast_literal::str() {
     return value->str();
+}
+
+sb_t_object *sb_ast_literal::execute() {
+    if (value->type == AST_T_TOKEN && ((sb_ast_token *)value)->token.type == TK_T_NUMBER) {
+        return new sb_t_int(0);
+    } else {
+        return value->execute();
+    }
 }

@@ -4,13 +4,14 @@
 # ./configure
 # make
 # ./build/main -h
-
 Usage:
-      ./main -e -f [filename]
+      ./build/main -e -f [filename]
 
       -h:  help
       -e:  echo
       -t:  tokenize
       -p:  parse
+      -r:  run
       -f:  read from file
+      -l:  log level [0 - 3]
 ```

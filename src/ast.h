@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "token.h"
+#include "type.h"
 
 using std::vector;
 using std::pair;
@@ -46,6 +47,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_token : public sb_ast {
@@ -57,6 +59,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_program : public sb_ast {
@@ -67,6 +70,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_statements : public sb_ast {
@@ -77,6 +81,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_statement : public sb_ast {
@@ -87,6 +92,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_assignment_statement : public sb_ast {
@@ -98,6 +104,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_print_statement : public sb_ast {
@@ -108,6 +115,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_expression : public sb_ast {
@@ -118,6 +126,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_additive_expression : public sb_ast {
@@ -129,6 +138,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_multipicative_expression : public sb_ast {
@@ -140,6 +150,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_primary_expression : public sb_ast {
@@ -150,6 +161,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 class sb_ast_literal : public sb_ast {
@@ -160,6 +172,7 @@ public:
 
     virtual string info();
     virtual string str();
+    virtual sb_t_object *execute();
 };
 
 #endif // SB_AST_H
