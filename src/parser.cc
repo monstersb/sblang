@@ -183,6 +183,14 @@ sb_ast *sb_parser::accept_primary_expression() {
         sb_log::debug(ast->info());
         return ast;
     }
+    exp = accept_token(TK_T_ID);
+    if (exp) {
+        sb_ast *ast = new sb_ast_primary_expression(exp);
+        ast->begin_tk_pos = exp->begin_tk_pos;
+        ast->end_tk_pos = exp->end_tk_pos;
+        sb_log::debug(ast->info());
+        return ast;
+    }
     sb_ast *l = accept_token(TK_T_LPAR);
     if (l) {
         exp = accept_expression();

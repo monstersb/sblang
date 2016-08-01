@@ -29,6 +29,7 @@ MultiplicativeExpression:
 
 PrimaryExpression:
     Literal
+    | [id]
     | [lpar] Expression [rpar]
     ;
 

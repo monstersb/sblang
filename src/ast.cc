@@ -60,8 +60,11 @@ sb_ast_token::sb_ast_token(sb_token &_token, size_t pos)
 
 
 string sb_ast_token::info() {
-    return format(
-        "{ %zu:%zu T_%s %s }", begin_tk_pos, end_tk_pos, sb_token_desc[token.type].name.c_str(), repr(str()).c_str());
+    return format("{ %zu:%zu T_%s %s }",
+                  begin_tk_pos,
+                  end_tk_pos,
+                  sb_token_desc[token.type].name.c_str(),
+                  repr(str()).c_str());
 }
 
 string sb_ast_token::str() {
@@ -197,6 +200,8 @@ string sb_ast_primary_expression::str() {
         return format("(%s)", exp->str().c_str());
     } else if (exp->type == AST_T_LITERAL) {
         return exp->str();
+    } else if (exp->type == AST_T_TOKEN && ((sb_ast_token *)exp)->token.type == TK_T_ID) {
+        return ((sb_ast_token *)exp)->token.str;
     } else {
         return string();
     }
