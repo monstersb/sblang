@@ -6,7 +6,7 @@ sb_token_desc_t sb_token_desc[TK_T_COUNT] = {
     {TK_T_ID, "ID"},         {TK_T_NUMBER, "NUMBER"},   {TK_T_ASSIGN, "ASSIGN"},
     {TK_T_ADD, "ADD"},       {TK_T_SUB, "SUB"},         {TK_T_MUL, "MUL"},
     {TK_T_DIV, "DIV"},       {TK_T_SEMI, "SEMI"},       {TK_T_LPAR, "LPAR"},
-    {TK_T_RPAR, "RPAR"},     {TK_T_K_PRINT, "K_PRINT"}, {TK_T_LBRACE, "LBRACE"},
+    {TK_T_RPAR, "RPAR"},      {TK_T_K_IF, "K_IF"}, {TK_T_K_PRINT, "K_PRINT"}, {TK_T_LBRACE, "LBRACE"},
     {TK_T_RBRACE, "RBRACE"},
 };
 

@@ -9,6 +9,7 @@ Statements:
 
 Statement:
     AssignmentStatement
+    | IfStatement
     | PrintStatement
     | BlockStatement
     ;
@@ -19,6 +20,10 @@ AssignmentStatement:
 
 PrintStatement:
     [k_print] Expression
+    ;
+
+IfStatement:
+    [k_if] [lpar] Expression [rpar] Statement
     ;
 
 BlockStatement:

@@ -14,6 +14,7 @@ sb_ast_desc_t sb_ast_desc[AST_T_COUNT] = {
     {AST_T_STATEMENTS, "STATEMENTS"},
     {AST_T_STATEMENT, "STATEMENT"},
     {AST_T_ASSIGNMENT_STATEMENT, "ASSIGNMENT_STATEMENT"},
+    {AST_T_IF_STATEMENT, "IF_STATEMENT"},
     {AST_T_PRINT_STATEMENT, "PRINT_STATEMENT"},
     {AST_T_BLOCK_STATEMENT, "BLOCK_STATEMENT"},
     {AST_T_EXPRESSION, "EXPRESSION"},
@@ -105,7 +106,6 @@ string sb_ast_statements::info() {
 string sb_ast_statements::str() {
     std::ostringstream s;
     for (auto i = statements.begin(); i != statements.end(); ++i) {
-        sb_log::error((*i)->str());
         s << (*i)->str() << ";";
     }
     return s.str();
@@ -158,6 +158,26 @@ string sb_ast_assignment_statement::str() {
 sb_t_object *sb_ast_assignment_statement::execute() {
     sb_t_object *value = right->execute();
     return value;
+}
+
+
+sb_ast_if_statement::sb_ast_if_statement(sb_ast *_test, sb_ast *_statement)
+    : sb_ast(AST_T_IF_STATEMENT), test(_test), statement(_statement) {}
+
+string sb_ast_if_statement::info() {
+    return format("{ %zu:%zu %s %s }",
+                  begin_tk_pos,
+                  end_tk_pos,
+                  sb_ast_desc[type].name.c_str(),
+                  repr(str()).c_str());
+}
+
+string sb_ast_if_statement::str() {
+    return format("if(%s)%s", test->str().c_str(), statement->str().c_str());
+}
+
+sb_t_object *sb_ast_if_statement::execute() {
+    return statement->execute();
 }
 
 

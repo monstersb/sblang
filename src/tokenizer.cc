@@ -44,6 +44,8 @@ void sb_tokenizer::skip_white() {
 sb_token_type_t sb_tokenizer::keyword_type(string s) {
     if (s == "print") {
         return TK_T_K_PRINT;
+    } else if (s == "if") {
+        return TK_T_K_IF;
     }
     return TK_T_ID;
 }

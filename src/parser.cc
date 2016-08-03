@@ -82,6 +82,11 @@ sb_ast *sb_parser::accept_statement() {
     if (statement) {
         goto success;
     }
+
+    statement = accept_if_statements();
+    if (statement) {
+        goto success;
+    }
     
     statement = accept_print_statements();
     if (statement) {
@@ -123,15 +128,43 @@ sb_ast *sb_parser::accept_assignment_statements() {
     return NULL;
 }
 
+sb_ast *sb_parser::accept_if_statements() {
+    sb_ast *k_if = accept_token(TK_T_K_IF);
+    if (k_if) {
+        size_t begin_tk_pos = k_if->begin_tk_pos;
+        delete k_if;
+        sb_ast *lpar = accept_token(TK_T_LPAR);
+        if (lpar) {
+            delete lpar;
+            sb_ast *test = accept_expression();
+            if (test) {
+                sb_ast *rpar = accept_token(TK_T_RPAR);
+                if (rpar) {
+                    delete rpar;
+                    sb_ast *statement = accept_statement();
+                    if (statement) {
+                        sb_ast *ast = new sb_ast_if_statement(test, statement);
+                        ast->begin_tk_pos = begin_tk_pos;
+                        ast->end_tk_pos = token_pos - 1;
+                        sb_log::debug(ast->info());
+                        return ast;
+                    }
+                }
+            }
+        }
+    }
+    return NULL;
+}
 
 sb_ast *sb_parser::accept_print_statements() {
     sb_ast *print = accept_token(TK_T_K_PRINT);
     if (print) {
+        size_t begin_tk_pos = print->begin_tk_pos;
         delete print;
         sb_ast *exp = accept_expression();
         if (exp) {
             sb_ast *ast = new sb_ast_print_statement(exp);
-            ast->begin_tk_pos = print->begin_tk_pos;
+            ast->begin_tk_pos = begin_tk_pos;
             ast->end_tk_pos = token_pos - 1;
             sb_log::debug(ast->info());
             return ast;
@@ -143,6 +176,7 @@ sb_ast *sb_parser::accept_print_statements() {
 sb_ast *sb_parser::accept_block_statements() {
     sb_ast *l = accept_token(TK_T_LBRACE);
     if (l) {
+        size_t begin_tk_pos = l->begin_tk_pos;
         delete l;
         sb_ast *statements = accept_statements();
         if (statements) {
@@ -150,8 +184,8 @@ sb_ast *sb_parser::accept_block_statements() {
             if (r) {
                 delete r;
                 sb_ast *ast = new sb_ast_block_statement(statements);
-                ast->begin_tk_pos = l->begin_tk_pos;
-                ast->end_tk_pos = r->end_tk_pos;
+                ast->begin_tk_pos = begin_tk_pos;
+                ast->end_tk_pos = token_pos - 1;
                 sb_log::debug(ast->info());
                 return ast;
             }
