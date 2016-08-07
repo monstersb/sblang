@@ -163,7 +163,7 @@ sb_t_object *sb_ast_assignment_statement::execute() {
 
 
 sb_ast_if_statement::sb_ast_if_statement(sb_ast *_test, sb_ast *_statement)
-: sb_ast(AST_T_IF_STATEMENT), test(_test), statement(_statement) {}
+    : sb_ast(AST_T_IF_STATEMENT), test(_test), statement(_statement) {}
 
 string sb_ast_if_statement::info() {
     return format("{ %zu:%zu %s %s }",
@@ -183,7 +183,7 @@ sb_t_object *sb_ast_if_statement::execute() {
 
 
 sb_ast_while_statement::sb_ast_while_statement(sb_ast *_test, sb_ast *_statement)
-: sb_ast(AST_T_WHILE_STATEMENT), test(_test), statement(_statement) {}
+    : sb_ast(AST_T_WHILE_STATEMENT), test(_test), statement(_statement) {}
 
 string sb_ast_while_statement::info() {
     return format("{ %zu:%zu %s %s }",
@@ -203,7 +203,7 @@ sb_t_object *sb_ast_while_statement::execute() {
 
 
 sb_ast_print_statement::sb_ast_print_statement(sb_ast *_exp)
-: sb_ast(AST_T_PRINT_STATEMENT), exp(_exp) {}
+    : sb_ast(AST_T_PRINT_STATEMENT), exp(_exp) {}
 
 
 string sb_ast_print_statement::info() {
@@ -226,7 +226,7 @@ sb_t_object *sb_ast_print_statement::execute() {
 
 
 sb_ast_block_statement::sb_ast_block_statement(sb_ast *_statements)
-: sb_ast(AST_T_BLOCK_STATEMENT), statements(_statements) {}
+    : sb_ast(AST_T_BLOCK_STATEMENT), statements(_statements) {}
 
 
 string sb_ast_block_statement::info() {
@@ -268,8 +268,8 @@ sb_t_object *sb_ast_expression::execute() {
 
 
 sb_ast_relational_expression::sb_ast_relational_expression(sb_ast *_base,
-                                                       vector<pair<sb_ast *, sb_ast *>> &_v)
-: sb_ast(AST_T_RELATIONAL_EXPRESSION), base(_base), v(_v) {}
+                                                           vector<pair<sb_ast *, sb_ast *>> &_v)
+    : sb_ast(AST_T_RELATIONAL_EXPRESSION), base(_base), v(_v) {}
 
 
 string sb_ast_relational_expression::info() {
@@ -296,7 +296,7 @@ sb_t_object *sb_ast_relational_expression::execute() {
 
 sb_ast_additive_expression::sb_ast_additive_expression(sb_ast *_base,
                                                        vector<pair<sb_ast *, sb_ast *>> &_v)
-: sb_ast(AST_T_ADDITIVE_EXPRESSION), base(_base), v(_v) {}
+    : sb_ast(AST_T_ADDITIVE_EXPRESSION), base(_base), v(_v) {}
 
 
 string sb_ast_additive_expression::info() {

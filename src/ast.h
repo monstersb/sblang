@@ -115,9 +115,9 @@ class sb_ast_if_statement : public sb_ast {
 public:
     sb_ast *test;
     sb_ast *statement;
-    
+
     sb_ast_if_statement(sb_ast *_test, sb_ast *_statement);
-    
+
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
@@ -127,9 +127,9 @@ class sb_ast_while_statement : public sb_ast {
 public:
     sb_ast *test;
     sb_ast *statement;
-    
+
     sb_ast_while_statement(sb_ast *_test, sb_ast *_statement);
-    
+
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
@@ -138,9 +138,9 @@ public:
 class sb_ast_print_statement : public sb_ast {
 public:
     sb_ast *exp;
-    
+
     sb_ast_print_statement(sb_ast *_exp);
-    
+
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
@@ -149,9 +149,9 @@ public:
 class sb_ast_block_statement : public sb_ast {
 public:
     sb_ast *statements;
-    
+
     sb_ast_block_statement(sb_ast *_statements);
-    
+
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
@@ -172,9 +172,9 @@ class sb_ast_relational_expression : public sb_ast {
 public:
     sb_ast *base;
     vector<pair<sb_ast *, sb_ast *>> v;
-    
+
     sb_ast_relational_expression(sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v);
-    
+
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
@@ -184,9 +184,9 @@ class sb_ast_additive_expression : public sb_ast {
 public:
     sb_ast *base;
     vector<pair<sb_ast *, sb_ast *>> v;
-    
+
     sb_ast_additive_expression(sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v);
-    
+
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();

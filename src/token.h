@@ -26,7 +26,7 @@ typedef enum {
     TK_T_RPAR,
     TK_T_LBRACE,
     TK_T_RBRACE,
-    
+
     TK_T_K_IF,
     TK_T_K_WHILE,
     TK_T_K_PRINT,

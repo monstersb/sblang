@@ -82,22 +82,22 @@ sb_ast *sb_parser::accept_statement() {
     if (statement) {
         goto success;
     }
-    
+
     statement = accept_if_statements();
     if (statement) {
         goto success;
     }
-    
+
     statement = accept_while_statements();
     if (statement) {
         goto success;
     }
-    
+
     statement = accept_print_statements();
     if (statement) {
         goto success;
     }
-    
+
     statement = accept_block_statements();
     if (statement) {
         goto success;
