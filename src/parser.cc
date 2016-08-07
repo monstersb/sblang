@@ -82,8 +82,13 @@ sb_ast *sb_parser::accept_statement() {
     if (statement) {
         goto success;
     }
-
+    
     statement = accept_if_statements();
+    if (statement) {
+        goto success;
+    }
+    
+    statement = accept_while_statements();
     if (statement) {
         goto success;
     }
@@ -156,6 +161,34 @@ sb_ast *sb_parser::accept_if_statements() {
     return NULL;
 }
 
+sb_ast *sb_parser::accept_while_statements() {
+    sb_ast *k_while = accept_token(TK_T_K_WHILE);
+    if (k_while) {
+        size_t begin_tk_pos = k_while->begin_tk_pos;
+        delete k_while;
+        sb_ast *lpar = accept_token(TK_T_LPAR);
+        if (lpar) {
+            delete lpar;
+            sb_ast *test = accept_expression();
+            if (test) {
+                sb_ast *rpar = accept_token(TK_T_RPAR);
+                if (rpar) {
+                    delete rpar;
+                    sb_ast *statement = accept_statement();
+                    if (statement) {
+                        sb_ast *ast = new sb_ast_while_statement(test, statement);
+                        ast->begin_tk_pos = begin_tk_pos;
+                        ast->end_tk_pos = token_pos - 1;
+                        sb_log::debug(ast->info());
+                        return ast;
+                    }
+                }
+            }
+        }
+    }
+    return NULL;
+}
+
 sb_ast *sb_parser::accept_print_statements() {
     sb_ast *print = accept_token(TK_T_K_PRINT);
     if (print) {
@@ -196,10 +229,40 @@ sb_ast *sb_parser::accept_block_statements() {
 }
 
 sb_ast *sb_parser::accept_expression() {
-    sb_ast *additive_expression = accept_additive_expression();
-    if (additive_expression) {
-        sb_ast *ast = new sb_ast_expression(additive_expression);
-        ast->begin_tk_pos = additive_expression->begin_tk_pos;
+    sb_ast *relational_expression = accept_relational_expression();
+    if (relational_expression) {
+        sb_ast *ast = new sb_ast_expression(relational_expression);
+        ast->begin_tk_pos = relational_expression->begin_tk_pos;
+        ast->end_tk_pos = token_pos - 1;
+        sb_log::debug(ast->info());
+        return ast;
+    }
+    return NULL;
+}
+
+sb_ast *sb_parser::accept_relational_expression() {
+    sb_ast *base = accept_additive_expression();
+    if (base) {
+        vector<pair<sb_ast *, sb_ast *>> v;
+        while (true) {
+            sb_ast *op = accept_token(TK_T_LT);
+            if (!op) {
+                op = accept_token(TK_T_GT);
+                if (!op) {
+                    op = accept_token(TK_T_EQ);
+                }
+            }
+            if (!op) {
+                break;
+            }
+            sb_ast *exp = accept_additive_expression();
+            if (!exp) {
+                break;
+            }
+            v.push_back(pair<sb_ast *, sb_ast *>(op, exp));
+        }
+        sb_ast *ast = new sb_ast_relational_expression(base, v);
+        ast->begin_tk_pos = base->begin_tk_pos;
         ast->end_tk_pos = token_pos - 1;
         sb_log::debug(ast->info());
         return ast;

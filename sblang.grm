@@ -10,6 +10,7 @@ Statements:
 Statement:
     AssignmentStatement
     | IfStatement
+    | WhileStatement
     | PrintStatement
     | BlockStatement
     ;
@@ -26,12 +27,20 @@ IfStatement:
     [k_if] [lpar] Expression [rpar] Statement
     ;
 
+WhileStatement:
+    [k_while] [lpar] Expression [rpar] Statement
+    ;
+
 BlockStatement:
     [lbrace] Statements [rbrace]
     ;
 
 Expression:
-    AdditiveExpression
+    RelationalExpression
+    ;
+
+RelationalExpression:
+    AdditiveExpression ( ([lt] | [gt] | [eq]) AdditiveExpression )*
     ;
 
 AdditiveExpression:

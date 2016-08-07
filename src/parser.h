@@ -21,9 +21,11 @@ private:
     sb_ast *accept_statement();
     sb_ast *accept_assignment_statements();
     sb_ast *accept_if_statements();
+    sb_ast *accept_while_statements();
     sb_ast *accept_print_statements();
     sb_ast *accept_block_statements();
     sb_ast *accept_expression();
+    sb_ast *accept_relational_expression();
     sb_ast *accept_additive_expression();
     sb_ast *accept_multiplicative_expression();
     sb_ast *accept_primary_expression();

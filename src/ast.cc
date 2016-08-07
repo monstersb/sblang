@@ -19,6 +19,7 @@ sb_ast_desc_t sb_ast_desc[AST_T_COUNT] = {
     {AST_T_BLOCK_STATEMENT, "BLOCK_STATEMENT"},
     {AST_T_EXPRESSION, "EXPRESSION"},
     {AST_T_ADDITIVE_EXPRESSION, "ADDITIVE_EXPRESSION"},
+    {AST_T_ADDITIVE_EXPRESSION, "RELATIONAL_EXPRESSION"},
     {AST_T_MULTIPICATE_EXPRESSION, "MULTIPICATE_EXPRESSION"},
     {AST_T_PRIMARY_EXPRESSION, "PRIMARY_EXPRESSION"},
     {AST_T_LITERAL, "LITERAL"},
@@ -162,7 +163,7 @@ sb_t_object *sb_ast_assignment_statement::execute() {
 
 
 sb_ast_if_statement::sb_ast_if_statement(sb_ast *_test, sb_ast *_statement)
-    : sb_ast(AST_T_IF_STATEMENT), test(_test), statement(_statement) {}
+: sb_ast(AST_T_IF_STATEMENT), test(_test), statement(_statement) {}
 
 string sb_ast_if_statement::info() {
     return format("{ %zu:%zu %s %s }",
@@ -177,6 +178,26 @@ string sb_ast_if_statement::str() {
 }
 
 sb_t_object *sb_ast_if_statement::execute() {
+    return statement->execute();
+}
+
+
+sb_ast_while_statement::sb_ast_while_statement(sb_ast *_test, sb_ast *_statement)
+: sb_ast(AST_T_WHILE_STATEMENT), test(_test), statement(_statement) {}
+
+string sb_ast_while_statement::info() {
+    return format("{ %zu:%zu %s %s }",
+                  begin_tk_pos,
+                  end_tk_pos,
+                  sb_ast_desc[type].name.c_str(),
+                  repr(str()).c_str());
+}
+
+string sb_ast_while_statement::str() {
+    return format("if(%s)%s", test->str().c_str(), statement->str().c_str());
+}
+
+sb_t_object *sb_ast_while_statement::execute() {
     return statement->execute();
 }
 
@@ -246,9 +267,36 @@ sb_t_object *sb_ast_expression::execute() {
 }
 
 
+sb_ast_relational_expression::sb_ast_relational_expression(sb_ast *_base,
+                                                       vector<pair<sb_ast *, sb_ast *>> &_v)
+: sb_ast(AST_T_RELATIONAL_EXPRESSION), base(_base), v(_v) {}
+
+
+string sb_ast_relational_expression::info() {
+    return format("{ %zu:%zu %s %s }",
+                  begin_tk_pos,
+                  end_tk_pos,
+                  sb_ast_desc[type].name.c_str(),
+                  repr(str()).c_str());
+}
+
+string sb_ast_relational_expression::str() {
+    std::ostringstream s;
+    s << base->str();
+    for (auto i = v.begin(); i != v.end(); ++i) {
+        s << i->first->str() << i->second->str();
+    }
+    return s.str();
+}
+
+sb_t_object *sb_ast_relational_expression::execute() {
+    return new sb_t_int(0);
+}
+
+
 sb_ast_additive_expression::sb_ast_additive_expression(sb_ast *_base,
                                                        vector<pair<sb_ast *, sb_ast *>> &_v)
-    : sb_ast(AST_T_ADDITIVE_EXPRESSION), base(_base), v(_v) {}
+: sb_ast(AST_T_ADDITIVE_EXPRESSION), base(_base), v(_v) {}
 
 
 string sb_ast_additive_expression::info() {

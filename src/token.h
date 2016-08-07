@@ -14,17 +14,21 @@ typedef enum {
     TK_T_ID,
     TK_T_NUMBER,
     TK_T_ASSIGN,
+    TK_T_EQ,
     TK_T_ADD,
     TK_T_SUB,
     TK_T_MUL,
     TK_T_DIV,
+    TK_T_LT,
+    TK_T_GT,
     TK_T_SEMI,
     TK_T_LPAR,
     TK_T_RPAR,
     TK_T_LBRACE,
     TK_T_RBRACE,
-
+    
     TK_T_K_IF,
+    TK_T_K_WHILE,
     TK_T_K_PRINT,
 
     TK_T_COUNT,

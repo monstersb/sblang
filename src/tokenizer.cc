@@ -46,6 +46,8 @@ sb_token_type_t sb_tokenizer::keyword_type(string s) {
         return TK_T_K_PRINT;
     } else if (s == "if") {
         return TK_T_K_IF;
+    } else if (s == "while") {
+        return TK_T_K_WHILE;
     }
     return TK_T_ID;
 }
@@ -89,8 +91,13 @@ sb_token &sb_tokenizer::next() {
             break;
         }
         case '=':
-            tk.set(TK_T_ASSIGN, '=', tk_line, tk_column);
             get_char();
+            if (lookahead == '=') {
+                tk.set(TK_T_EQ, "==", tk_line, tk_column);
+                get_char();
+            } else {
+                tk.set(TK_T_ASSIGN, '=', tk_line, tk_column);
+            }
             break;
         case '+':
             tk.set(TK_T_ADD, '+', tk_line, tk_column);
@@ -106,6 +113,14 @@ sb_token &sb_tokenizer::next() {
             break;
         case '/':
             tk.set(TK_T_DIV, '/', tk_line, tk_column);
+            get_char();
+            break;
+        case '<':
+            tk.set(TK_T_LT, '<', tk_line, tk_column);
+            get_char();
+            break;
+        case '>':
+            tk.set(TK_T_GT, '>', tk_line, tk_column);
             get_char();
             break;
         case ';':

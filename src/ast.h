@@ -19,9 +19,11 @@ typedef enum {
     AST_T_STATEMENT,
     AST_T_ASSIGNMENT_STATEMENT,
     AST_T_IF_STATEMENT,
+    AST_T_WHILE_STATEMENT,
     AST_T_PRINT_STATEMENT,
     AST_T_BLOCK_STATEMENT,
     AST_T_EXPRESSION,
+    AST_T_RELATIONAL_EXPRESSION,
     AST_T_ADDITIVE_EXPRESSION,
     AST_T_MULTIPICATE_EXPRESSION,
     AST_T_PRIMARY_EXPRESSION,
@@ -113,9 +115,21 @@ class sb_ast_if_statement : public sb_ast {
 public:
     sb_ast *test;
     sb_ast *statement;
-
+    
     sb_ast_if_statement(sb_ast *_test, sb_ast *_statement);
+    
+    virtual string info();
+    virtual string str();
+    virtual sb_t_object *execute();
+};
 
+class sb_ast_while_statement : public sb_ast {
+public:
+    sb_ast *test;
+    sb_ast *statement;
+    
+    sb_ast_while_statement(sb_ast *_test, sb_ast *_statement);
+    
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
@@ -154,13 +168,25 @@ public:
     virtual sb_t_object *execute();
 };
 
+class sb_ast_relational_expression : public sb_ast {
+public:
+    sb_ast *base;
+    vector<pair<sb_ast *, sb_ast *>> v;
+    
+    sb_ast_relational_expression(sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v);
+    
+    virtual string info();
+    virtual string str();
+    virtual sb_t_object *execute();
+};
+
 class sb_ast_additive_expression : public sb_ast {
 public:
     sb_ast *base;
     vector<pair<sb_ast *, sb_ast *>> v;
-
+    
     sb_ast_additive_expression(sb_ast *_base, vector<pair<sb_ast *, sb_ast *>> &_v);
-
+    
     virtual string info();
     virtual string str();
     virtual sb_t_object *execute();
