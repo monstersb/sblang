@@ -99,6 +99,41 @@ sb_token &sb_tokenizer::next() {
                 tk.set(TK_T_ASSIGN, '=', tk_line, tk_column);
             }
             break;
+        case '!':
+            get_char();
+            if (lookahead == '=') {
+                tk.set(TK_T_NEQ, "!=", tk_line, tk_column);
+                get_char();
+            } else {
+                tk.set(TK_T_L_NOT, '!', tk_line, tk_column);
+            }
+            break;
+        case '&':
+            get_char();
+            if (lookahead == '&') {
+                tk.set(TK_T_L_AND, "&&", tk_line, tk_column);
+                get_char();
+            } else {
+                tk.set(TK_T_B_AND, '&', tk_line, tk_column);
+            }
+            break;
+        case '|':
+            get_char();
+            if (lookahead == '|') {
+                tk.set(TK_T_L_OR, "||", tk_line, tk_column);
+                get_char();
+            } else {
+                tk.set(TK_T_B_OR, '|', tk_line, tk_column);
+            }
+            break;
+        case '~':
+            tk.set(TK_T_B_NOT, '~', tk_line, tk_column);
+            get_char();
+            break;
+        case '^':
+            tk.set(TK_T_B_XOR, '^', tk_line, tk_column);
+            get_char();
+            break;
         case '+':
             tk.set(TK_T_ADD, '+', tk_line, tk_column);
             get_char();
@@ -116,12 +151,22 @@ sb_token &sb_tokenizer::next() {
             get_char();
             break;
         case '<':
-            tk.set(TK_T_LT, '<', tk_line, tk_column);
             get_char();
+            if (lookahead == '=') {
+                tk.set(TK_T_LTE, "<=", tk_line, tk_column);
+                get_char();
+            } else {
+                tk.set(TK_T_LT, '<', tk_line, tk_column);
+            }
             break;
         case '>':
-            tk.set(TK_T_GT, '>', tk_line, tk_column);
             get_char();
+            if (lookahead == '=') {
+                tk.set(TK_T_GTE, ">=", tk_line, tk_column);
+                get_char();
+            } else {
+                tk.set(TK_T_GT, '>', tk_line, tk_column);
+            }
             break;
         case ';':
             tk.set(TK_T_SEMI, ';', tk_line, tk_column);

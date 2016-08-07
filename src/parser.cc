@@ -247,9 +247,18 @@ sb_ast *sb_parser::accept_relational_expression() {
         while (true) {
             sb_ast *op = accept_token(TK_T_LT);
             if (!op) {
-                op = accept_token(TK_T_GT);
+                op = accept_token(TK_T_LTE);
                 if (!op) {
-                    op = accept_token(TK_T_EQ);
+                    op = accept_token(TK_T_GT);
+                    if (!op) {
+                        op = accept_token(TK_T_GTE);
+                        if (!op) {
+                            op = accept_token(TK_T_EQ);
+                            if (!op) {
+                                op = accept_token(TK_T_NEQ);
+                            }
+                        }
+                    }
                 }
             }
             if (!op) {
