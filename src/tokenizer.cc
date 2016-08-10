@@ -7,11 +7,18 @@
 
 sb_tokenizer::sb_tokenizer(std::istream &in)
     : in(in), _line(1), _column(0), eof(false), invalid(false) {
+    init_keyword();
     get_char();
     sb_log::debug("sb_tokenizer inited");
 }
 
 sb_tokenizer::~sb_tokenizer() {}
+
+void sb_tokenizer::init_keyword() {
+    keyword["print"] = TK_T_K_PRINT;
+    keyword["if"] = TK_T_K_IF;
+    keyword["while"] = TK_T_K_WHILE;
+}
 
 bool sb_tokenizer::is_white_char(char c) {
     return c == ' ' || c == '\t' || c == '\r' || c == '\n';
@@ -42,14 +49,11 @@ void sb_tokenizer::skip_white() {
 
 
 sb_token_type_t sb_tokenizer::keyword_type(string s) {
-    if (s == "print") {
-        return TK_T_K_PRINT;
-    } else if (s == "if") {
-        return TK_T_K_IF;
-    } else if (s == "while") {
-        return TK_T_K_WHILE;
+    if (keyword.find(s) != keyword.end()) {
+        return keyword[s];
+    } else {
+        return TK_T_ID;
     }
-    return TK_T_ID;
 }
 
 bool sb_tokenizer::stop() {

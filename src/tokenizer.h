@@ -5,8 +5,11 @@
 #include <istream>
 #include <vector>
 #include <string>
+#include <map>
 
 #include "token.h"
+
+using std::map;
 
 class sb_tokenizer {
 private:
@@ -18,7 +21,9 @@ private:
     int lookahead;
     bool eof;
     bool invalid;
+    map<string, sb_token_type_t> keyword;
 
+    void init_keyword();
     bool is_white_char(char c);
     int get_char();
     void skip_white();
