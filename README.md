@@ -1,4 +1,8 @@
+
 # sblang
+
+Build status (on Travis CI) [![Build Status](https://travis-ci.org/monstersb/sblang.png)](https://travis-ci.org/monstersb/sblang)
+
 
 ```
 # ./configure
