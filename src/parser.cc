@@ -372,6 +372,9 @@ sb_ast *sb_parser::accept_primary_expression() {
 
 sb_ast *sb_parser::accept_literal() {
     sb_ast *tk = accept_token(TK_T_NUMBER);
+    if (!tk) {
+        tk = accept_token(TK_T_STRING);
+    }
     if (tk) {
         sb_ast *ast = new sb_ast_literal(tk);
         ast->begin_tk_pos = tk->begin_tk_pos;

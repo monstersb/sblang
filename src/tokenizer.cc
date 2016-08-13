@@ -94,6 +94,25 @@ sb_token &sb_tokenizer::next() {
                           tk_column);
             break;
         }
+        case '"':
+            do {
+                buffer.push_back(lookahead);
+                get_char();
+                if (lookahead == '\\') {
+                    buffer.push_back(lookahead);
+                    get_char();
+                    if (lookahead == '\\' || lookahead == '"') {
+                        buffer.push_back(lookahead);
+                        get_char();
+                    }
+                } else if (lookahead == '"') {
+                    buffer.push_back(lookahead);
+                    get_char();
+                    break;
+                }
+            } while (true);
+            tk = sb_token(TK_T_STRING, buffer, tk_line, tk_column);
+            break;
         case '=':
             get_char();
             if (lookahead == '=') {

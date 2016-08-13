@@ -20,3 +20,10 @@ sb_t_int::sb_t_int(int v) : value(v) {}
 string sb_t_int::str() {
     return format("%d", value);
 }
+
+
+sb_t_string::sb_t_string(string v) : value(v) {}
+
+string sb_t_string::str() {
+    return value;
+}

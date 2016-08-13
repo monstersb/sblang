@@ -13,6 +13,7 @@ typedef enum {
     TK_T_EOF,
     TK_T_ID,
     TK_T_NUMBER,
+    TK_T_STRING,
     TK_T_ASSIGN,
     TK_T_ADD,
     TK_T_SUB,

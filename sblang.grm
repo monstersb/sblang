@@ -59,4 +59,5 @@ PrimaryExpression:
 
 Literal:
     [number]
+    | [string]
     ;
