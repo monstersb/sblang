@@ -1,5 +1,6 @@
 #include <sstream>
 #include <iomanip>
+#include <stdarg.h>
 #include "utils.h"
 
 string repr(string s) {
