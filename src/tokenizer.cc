@@ -30,8 +30,10 @@ int sb_tokenizer::get_char() {
         eof = true;
     } else {
         if (c == '\n' || c == '\r') {
-            _line += 1;
-            _column = 1;
+            if (!(lookahead == '\r' && c == '\n')) {
+                _line += 1;
+                _column = 0;
+            }
         } else {
             _column += 1;
         }
